@@ -1,4 +1,4 @@
-#import "FaceDetection.h"
+#import "face_detection.h"
 
 @implementation FaceDetection {
     MLKFaceDetector *faceDetector;
