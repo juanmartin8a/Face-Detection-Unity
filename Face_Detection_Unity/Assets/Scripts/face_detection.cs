@@ -71,21 +71,49 @@ public class FaceDetection : MonoBehaviour
     {
         if (isLoading)
             return;
+
         isLoading = true;
-    if (cameraManager.TryAcquireLatestCpuImage(out XRCpuImage image))
+
+        if (cameraManager.TryAcquireLatestCpuImage(out XRCpuImage image))
         {
             using (image)
             {
+
+                Debug.Log($"AR Camera Resolution: {image.width}x{image.height}");
+
+                float displayAspect = (float)Screen.width / Screen.height;
+                float imageAspect = (float)image.width / image.height;
+
+                int croppedWidth, croppedHeight;
+                int xOffset = 0, yOffset = 0;
+
+                if (displayAspect > imageAspect)
+                {
+                    croppedWidth = image.width;
+                    croppedHeight = Mathf.RoundToInt(croppedWidth / displayAspect);
+                    yOffset = (image.height - croppedHeight) / 2;
+                }
+                else
+                {
+                    croppedHeight = image.height;
+                    croppedWidth = Mathf.RoundToInt(croppedHeight * displayAspect);
+                    xOffset = (image.width - croppedWidth) / 2;
+                }
+
+
                 var conversionParams = new XRCpuImage.ConversionParams
                 {
-                    inputRect = new RectInt(0, 0, image.width, image.height),
-                    outputDimensions = new Vector2Int(image.width, image.height),
+                    // inputRect = new RectInt(0, 0, image.width, image.height),
+                    inputRect = new RectInt(xOffset, yOffset, croppedWidth, croppedHeight),
+                    outputDimensions = new Vector2Int(croppedWidth, croppedHeight),
                     outputFormat = TextureFormat.RGBA32,
                     transformation = XRCpuImage.Transformation.None
                 };
 
                 int size = image.GetConvertedDataSize(conversionParams);
                 var buffer = new NativeArray<byte>(size, Allocator.Temp);
+
+                Debug.Log($"AR Camera Resolution 2: {croppedWidth}x{croppedHeight}");
 
                 try
                 {
@@ -96,7 +124,6 @@ public class FaceDetection : MonoBehaviour
                 }
                 finally
                 {
-    
                     buffer.Dispose();
                     isLoading = false;
                 }
