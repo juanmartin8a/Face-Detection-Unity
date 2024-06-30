@@ -24,10 +24,11 @@
 - (void)initializeFaceDetector {
     NSLog(@"salsa");
     MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
-    options.performanceMode = MLKFaceDetectorPerformanceModeAccurate;
+    options.performanceMode = MLKFaceDetectorPerformanceModeFast;
     options.contourMode = MLKFaceDetectorContourModeAll;
     options.landmarkMode = MLKFaceDetectorLandmarkModeNone;
     options.classificationMode = MLKFaceDetectorClassificationModeNone;
+    options.minFaceSize = 0.15;
 
     faceDetector = [MLKFaceDetector faceDetectorWithOptions:options];
 }
@@ -146,3 +147,4 @@ extern "C" {
     }
 
 }
+
