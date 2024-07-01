@@ -634,6 +634,7 @@ extern void Stopwatch_get_ElapsedTicks_m3F4040FBF8C7CCDC69E0E04824019DEBB25AA410
 extern void Stopwatch_Reset_mF22DE61FDE7FF5825C750D2F6482B591BDC715FA (void);
 extern void Stopwatch_Start_m35906A38C7D336CF9DD35854C7E170D762A55915 (void);
 extern void Stopwatch_Stop_m8F2A2EFD9D7D5B4180A5E5379E5443864618D7DC (void);
+extern void Stopwatch_Restart_m9CE82CCD811EE12C2E4FDFF708B5529D1CE6DA58 (void);
 extern void Stopwatch__cctor_mF9BBC572803E232BF2D323301E90A6AFDB496FB9 (void);
 extern void ExcludeFromCodeCoverageAttribute__ctor_m2CB8196E20519167E842D03BE4CFBCC84BEFC9E2 (void);
 extern void Oid__ctor_m4AF81B9D51BED48AE505251E0874EC654BA07B72 (void);
@@ -926,7 +927,7 @@ extern void WebRequestModuleElementCollection__ctor_m62C156D78336B2E37EA6F10D477
 extern void DiagnosticsConfigurationHandler__ctor_mDFB0000E6218840F66D21BB6C9BF3F647CCBC5A3 (void);
 extern void DiagnosticsConfigurationHandler_Create_mF21B1CC68B87DE078690B2B493FCDC5F728CBAAB (void);
 extern void ThrowStub_ThrowNotSupportedException_m14168B43936EF78B7B8AC08BD815254DAA1D9FA2 (void);
-static Il2CppMethodPointer s_methodPointers[1064] = 
+static Il2CppMethodPointer s_methodPointers[1065] = 
 {
 	OidLookup_ToOid_m084AE2948BA1D784EAC148B97B6D5EF94F0D58B0,
 	OidLookup_ShouldUseCache_mAF605BA00A22EA400B99D24286837F6904C84ED0,
@@ -1554,6 +1555,7 @@ static Il2CppMethodPointer s_methodPointers[1064] =
 	Stopwatch_Reset_mF22DE61FDE7FF5825C750D2F6482B591BDC715FA,
 	Stopwatch_Start_m35906A38C7D336CF9DD35854C7E170D762A55915,
 	Stopwatch_Stop_m8F2A2EFD9D7D5B4180A5E5379E5443864618D7DC,
+	Stopwatch_Restart_m9CE82CCD811EE12C2E4FDFF708B5529D1CE6DA58,
 	Stopwatch__cctor_mF9BBC572803E232BF2D323301E90A6AFDB496FB9,
 	ExcludeFromCodeCoverageAttribute__ctor_m2CB8196E20519167E842D03BE4CFBCC84BEFC9E2,
 	Oid__ctor_m4AF81B9D51BED48AE505251E0874EC654BA07B72,
@@ -2014,7 +2016,7 @@ static Il2CppTokenAdjustorThunkPair s_adjustorThunks[9] =
 	{ 0x060001F9, RegexPrefix_get_CaseInsensitive_m4DAE2D9E91916BFFAB928F7DCAA20A5ABD4560E6_AdjustorThunk },
 	{ 0x060001FB, RegexPrefix_get_Prefix_m844D02262C0720B0DC488AD1541713AD37BC518E_AdjustorThunk },
 };
-static const int32_t s_InvokerIndices[1064] = 
+static const int32_t s_InvokerIndices[1065] = 
 {
 	10591,
 	12564,
@@ -2642,6 +2644,7 @@ static const int32_t s_InvokerIndices[1064] =
 	8551,
 	8551,
 	8551,
+	8551,
 	13373,
 	8551,
 	6688,
@@ -3093,7 +3096,7 @@ static const Il2CppTokenRangePair s_rgctxIndices[11] =
 	{ 0x0200009D, { 122, 5 } },
 	{ 0x0200009E, { 127, 12 } },
 	{ 0x0200009F, { 139, 11 } },
-	{ 0x06000340, { 0, 2 } },
+	{ 0x06000341, { 0, 2 } },
 };
 extern const uint32_t g_rgctx_TU26_t633A31097C4ACDEA7F1CF739800D99D7461E2B39;
 extern const uint32_t g_rgctx_T_t047CCAB016DADA45BF2B971B3E7C13F5D9EEAD31;
@@ -3402,7 +3405,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_System_CodeGenModule;
 const Il2CppCodeGenModule g_System_CodeGenModule = 
 {
 	"System.dll",
-	1064,
+	1065,
 	s_methodPointers,
 	9,
 	s_adjustorThunks,

@@ -12,6 +12,8 @@
 
 
 
+extern void Drawer_RecieveMessage_m7AD42A681BE87A6EA9A350850BEB7C3579309D79 (void);
+extern void Drawer__ctor_mB78BA2DFE0DC53C749EDD769366532EFD0EF19CA (void);
 extern void FaceDetection_InitializeFaceDetector_m11AAA01FE16BBA7EB971029263B163F6283F6BBA (void);
 extern void FaceDetection_DetectFaces_m58359FEA69BECBCCAC9C48ED6C65987B98C97BB8 (void);
 extern void FaceDetection_Awake_mCF38CDDD719A0E59A05E0634618C91AC8B918547 (void);
@@ -24,8 +26,10 @@ extern void Readme__ctor_m69C325C4C171DCB0312B646A9034AA91EA8C39C6 (void);
 extern void Section__ctor_m5F732533E4DFC0167D965E5F5DB332E46055399B (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033 (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1 (void);
-static Il2CppMethodPointer s_methodPointers[12] = 
+static Il2CppMethodPointer s_methodPointers[14] = 
 {
+	Drawer_RecieveMessage_m7AD42A681BE87A6EA9A350850BEB7C3579309D79,
+	Drawer__ctor_mB78BA2DFE0DC53C749EDD769366532EFD0EF19CA,
 	FaceDetection_InitializeFaceDetector_m11AAA01FE16BBA7EB971029263B163F6283F6BBA,
 	FaceDetection_DetectFaces_m58359FEA69BECBCCAC9C48ED6C65987B98C97BB8,
 	FaceDetection_Awake_mCF38CDDD719A0E59A05E0634618C91AC8B918547,
@@ -39,8 +43,10 @@ static Il2CppMethodPointer s_methodPointers[12] =
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033,
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1,
 };
-static const int32_t s_InvokerIndices[12] = 
+static const int32_t s_InvokerIndices[14] = 
 {
+	6688,
+	8551,
 	13373,
 	10134,
 	8551,
@@ -58,7 +64,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	12,
+	14,
 	s_methodPointers,
 	0,
 	NULL,

@@ -24,10 +24,11 @@
 - (void)initializeFaceDetector {
     NSLog(@"salsa");
     MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
-    options.performanceMode = MLKFaceDetectorPerformanceModeAccurate;
-    options.contourMode = MLKFaceDetectorContourModeAll;
+    options.performanceMode = MLKFaceDetectorPerformanceModeFast;
+    options.contourMode = MLKFaceDetectorContourModeNone;
     options.landmarkMode = MLKFaceDetectorLandmarkModeNone;
     options.classificationMode = MLKFaceDetectorClassificationModeNone;
+    options.minFaceSize = 0.15;
 
     faceDetector = [MLKFaceDetector faceDetectorWithOptions:options];
 }
@@ -106,6 +107,8 @@
         CVPixelBufferRelease(pixelBuffer);
         CFRelease(videoInfo);
         CFRelease(sampleBuffer);
+
+        UnitySendMessage("XR Origin", "RecieveMessage", "sapo siiiuuuuuuu");
 }
 
 - (UIImageOrientation)
@@ -146,3 +149,4 @@ extern "C" {
     }
 
 }
+
