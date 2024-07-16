@@ -672,6 +672,7 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
 		1D45A5CCCCC4E76191AAF1D0 /* libil2cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE54DC7E56FA015DDC9659BD /* libil2cpp.a */; };
 		31225D1650DC00B5516F4BE8 /* UnityARKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DFB872639FBCC349F7C3A6 /* UnityARKit.m */; };
 		415674EFD2EC187355BC05B1 /* LaunchScreen-iPhoneLandscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 1E24B93E9D27D99850693BAF /* LaunchScreen-iPhoneLandscape.png */; };
+		469E986A52AB77CA73A41E93 /* face_detection_utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F41BE0BEB06F306BC98DC06 /* face_detection_utils.m */; };
 		475B26F38A3A652C6174529D /* IUnityInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 679ACDCF6D14CA6FE6F81479 /* IUnityInterface.h */; };
 		51A26C0503182A5FC0527FBD /* face_detection.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC3164BA080A739D0C54B55 /* face_detection.h */; };
 		5623C57617FDCB0800090B9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -763,6 +764,7 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
 		D085C06443DB1B1B5C6637B6 /* LaunchScreen-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = D556450C3DBEECE838996A3D /* LaunchScreen-iPad.png */; };
 		EB5B61CC786C94665E84AD94 /* libUnityARKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D74997B880D2FC3669B2E9BC /* libUnityARKit.a */; };
 		F5C03E9DD3BF40D8EC0F4404 /* LaunchScreen-iPhonePortrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 681AA63C19788ACA381FB8C1 /* LaunchScreen-iPhonePortrait.png */; };
+		FF2D2B707B1D1759FF827757 /* face_detection_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A59F3C9B0B58AC76EA0A89F /* face_detection_utils.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -857,6 +859,7 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
 		196E9825E8305BAF49AC748B /* Unity.Mathematics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Unity.Mathematics.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Unity.Mathematics.cpp; sourceTree = SOURCE_ROOT; };
 		1972A87589EFBAF4986775C2 /* Generics__65.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Generics__65.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Generics__65.cpp; sourceTree = SOURCE_ROOT; };
 		19C29945C52FEAE23D767DA6 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
+		1A59F3C9B0B58AC76EA0A89F /* face_detection_utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = face_detection_utils.h; path = Libraries/Plugins/iOS/face_detection/face_detection_utils.h; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Unity-Target-New.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unity-Target-New.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DC31C363AA49E88C15788BB /* mscorlib__11.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mscorlib__11.cpp; path = Il2CppOutputProject/Source/il2cppOutput/mscorlib__11.cpp; sourceTree = SOURCE_ROOT; };
@@ -1111,6 +1114,7 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
 		8DF7D168881C3EF89850AD0A /* Generics__6.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Generics__6.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Generics__6.cpp; sourceTree = SOURCE_ROOT; };
 		8E6728ADD56BA33B896627DA /* Generics__1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Generics__1.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Generics__1.cpp; sourceTree = SOURCE_ROOT; };
 		8F13D042492DBEB7CF96DC23 /* Generics__9.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Generics__9.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Generics__9.cpp; sourceTree = SOURCE_ROOT; };
+		8F41BE0BEB06F306BC98DC06 /* face_detection_utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = face_detection_utils.m; path = Libraries/Plugins/iOS/face_detection/face_detection_utils.m; sourceTree = SOURCE_ROOT; };
 		8F8539D174DC5F6F066347FF /* Generics__39.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Generics__39.cpp; path = Il2CppOutputProject/Source/il2cppOutput/Generics__39.cpp; sourceTree = SOURCE_ROOT; };
 		8FE3E92069BB36F8854D7277 /* __Generated_CodeGen.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = __Generated_CodeGen.c; path = Il2CppOutputProject/Source/il2cppOutput/__Generated_CodeGen.c; sourceTree = SOURCE_ROOT; };
 		90114C270D8D46748478032F /* UnityEngine.CoreModule__1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnityEngine.CoreModule__1.cpp; path = Il2CppOutputProject/Source/il2cppOutput/UnityEngine.CoreModule__1.cpp; sourceTree = SOURCE_ROOT; };
@@ -1454,6 +1458,8 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
 			children = (
 				CBC3164BA080A739D0C54B55 /* face_detection.h */,
 				35611B2FCACB132D362B0189 /* face_detection.mm */,
+				1A59F3C9B0B58AC76EA0A89F /* face_detection_utils.h */,
+				8F41BE0BEB06F306BC98DC06 /* face_detection_utils.m */,
 			);
 			path = face_detection;
 			sourceTree = "<group>";
@@ -2012,6 +2018,7 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
 				9DC67E8721CBBEC7005F9FA1 /* RedefinePlatforms.h in Headers */,
 				9DC67E8921CBBEDF005F9FA1 /* LifeCycleListener.h in Headers */,
 				8BEDFA3929C88F86007F26D7 /* UnityViewControllerBase+visionOS.h in Headers */,
+				FF2D2B707B1D1759FF827757 /* face_detection_utils.h in Headers */,
 				51A26C0503182A5FC0527FBD /* face_detection.h in Headers */,
 				475B26F38A3A652C6174529D /* IUnityInterface.h in Headers */,
 				826E40C67FAA509B29A0EFA3 /* IUnityGraphics.h in Headers */,
@@ -2268,6 +2275,7 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
 				31225D1650DC00B5516F4BE8 /* UnityARKit.m in Sources */,
 				D02F212ED23DDBD2539B094F /* face_detection.mm in Sources */,
 				030A68812E193A334BDD7087 /* iOSStepCounter.mm in Sources */,
+				469E986A52AB77CA73A41E93 /* face_detection_utils.m in Sources */,
 				9BA70426A90DB33FFDF35A71 /* lib_burst_generated.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,10 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
-    Assembly-CSharp-Editor.dll:
-    - ReadmeEditor
     Assembly-CSharp.dll:
     - FaceDetection
-    - Readme
     Unity.InputSystem.dll:
     - UnityEngine.InputSystem.InputSettings
     - UnityEngine.InputSystem.InputSystemObject
@@ -75,6 +72,7 @@ ScriptsOnlyBuild:
     - UnityEngine.XR.Management.XRManagerSettings
     Unity.XR.Simulation.Editor.dll:
     - UnityEditor.XR.Simulation.SimulationEnvironmentAssetsManager
+    - UnityEditor.XR.Simulation.XREnvironmentViewManager
     - UnityEditor.XR.Simulation.XRSimulationSettings
     Unity.XR.Simulation.dll:
     - UnityEngine.XR.Simulation.SimulatedBoundedPlane
@@ -264,55 +262,57 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 22450}
     - Class: 114
-      Script: {instanceID: 23480}
+      Script: {instanceID: 22802}
     - Class: 114
-      Script: {instanceID: 23612}
+      Script: {instanceID: 23482}
     - Class: 114
-      Script: {instanceID: 23990}
+      Script: {instanceID: 23614}
     - Class: 114
-      Script: {instanceID: 24368}
+      Script: {instanceID: 23992}
     - Class: 114
-      Script: {instanceID: 24460}
+      Script: {instanceID: 24370}
     - Class: 114
-      Script: {instanceID: 24686}
+      Script: {instanceID: 24462}
     - Class: 114
-      Script: {instanceID: 24758}
+      Script: {instanceID: 24688}
     - Class: 114
-      Script: {instanceID: 25018}
+      Script: {instanceID: 24760}
     - Class: 114
-      Script: {instanceID: 25124}
+      Script: {instanceID: 25020}
     - Class: 114
-      Script: {instanceID: 25380}
+      Script: {instanceID: 25126}
     - Class: 114
-      Script: {instanceID: 26082}
+      Script: {instanceID: 25382}
     - Class: 114
-      Script: {instanceID: 26328}
+      Script: {instanceID: 26084}
     - Class: 114
-      Script: {instanceID: 26396}
+      Script: {instanceID: 26330}
     - Class: 114
-      Script: {instanceID: 26576}
+      Script: {instanceID: 26398}
     - Class: 114
-      Script: {instanceID: 26660}
+      Script: {instanceID: 26578}
     - Class: 114
-      Script: {instanceID: 26684}
+      Script: {instanceID: 26662}
     - Class: 114
-      Script: {instanceID: 26880}
+      Script: {instanceID: 26686}
     - Class: 114
-      Script: {instanceID: 27020}
+      Script: {instanceID: 26882}
     - Class: 114
-      Script: {instanceID: 27116}
+      Script: {instanceID: 27022}
     - Class: 114
-      Script: {instanceID: 27206}
+      Script: {instanceID: 27118}
     - Class: 114
-      Script: {instanceID: 27340}
+      Script: {instanceID: 27208}
     - Class: 114
-      Script: {instanceID: 27482}
+      Script: {instanceID: 27342}
     - Class: 114
-      Script: {instanceID: 27768}
+      Script: {instanceID: 27484}
     - Class: 114
-      Script: {instanceID: 28098}
+      Script: {instanceID: 27770}
     - Class: 114
-      Script: {instanceID: 28580}
+      Script: {instanceID: 28100}
+    - Class: 114
+      Script: {instanceID: 28582}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -2250,6 +2250,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: ae6fe1c11265890df1a07cce8e7b6dac
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: Renderer
   platform: 9
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

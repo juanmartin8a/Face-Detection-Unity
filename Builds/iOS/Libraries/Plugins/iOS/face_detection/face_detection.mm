@@ -1,4 +1,5 @@
 #import "face_detection.h"
+#import "face_detection_utils.h"
 
 @implementation FaceDetection {
     MLKFaceDetector *faceDetector;
@@ -25,7 +26,7 @@
     NSLog(@"salsa");
     MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
     options.performanceMode = MLKFaceDetectorPerformanceModeFast;
-    options.contourMode = MLKFaceDetectorContourModeNone;
+    options.contourMode = MLKFaceDetectorContourModeAll;
     options.landmarkMode = MLKFaceDetectorLandmarkModeNone;
     options.classificationMode = MLKFaceDetectorClassificationModeNone;
     options.minFaceSize = 0.15;
@@ -93,22 +94,37 @@
             }
         
             NSLog(@"Face detection completed. Found %lu faces", faces.count);
+            NSMutableArray *faceDictionaries = [NSMutableArray arrayWithCapacity:faces.count];
 
             for (MLKFace *face in faces) {
+                [faceDictionaries addObject:[FaceDetectionUtils dictionaryFromMLKFace:face]];
                 // Process each face
 //                NSLog(@"Face detected with bounding box: %@", NSStringFromCGRect(face.frame));
-                CGRect frame = face.frame;
+                // CGRect frame = face.frame;
+                
+                // UnitySendMessage("Drawer", "RecieveMessage", );
                 NSLog(@"Face detected at %@ at time %f", NSStringFromCGRect(frame), CMTimeGetSeconds(presentationTime));
             }
+
+            NSError *error;
+        
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&error];
+        
+            if (error) {
+                NSLog(@"Error serializing JSON: %@", error);
+                return;
+            }
+        
+            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+            UnitySendMessage("Renderer", "ReceiveMessage", [jsonString UTF8String])
         }];
     
-        NSLog(@"Face detection process initiated");
+        NSLog(@"Face detection process ended");
     
         CVPixelBufferRelease(pixelBuffer);
         CFRelease(videoInfo);
         CFRelease(sampleBuffer);
-
-        UnitySendMessage("XR Origin", "RecieveMessage", "sapo siiiuuuuuuu");
 }
 
 - (UIImageOrientation)
