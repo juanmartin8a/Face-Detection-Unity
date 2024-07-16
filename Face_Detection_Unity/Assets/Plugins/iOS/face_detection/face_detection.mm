@@ -100,7 +100,7 @@
                 [faceDictionaries addObject:[FaceDetectionUtils dictionaryFromMLKFace:face]];
                 // Process each face
 //                NSLog(@"Face detected with bounding box: %@", NSStringFromCGRect(face.frame));
-                // CGRect frame = face.frame;
+                CGRect frame = face.frame;
                 
                 // UnitySendMessage("Drawer", "RecieveMessage", );
                 NSLog(@"Face detected at %@ at time %f", NSStringFromCGRect(frame), CMTimeGetSeconds(presentationTime));
