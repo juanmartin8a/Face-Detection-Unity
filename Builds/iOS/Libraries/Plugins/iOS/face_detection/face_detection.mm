@@ -106,18 +106,18 @@
                 NSLog(@"Face detected at %@ at time %f", NSStringFromCGRect(frame), CMTimeGetSeconds(presentationTime));
             }
 
-            NSError *error;
+            NSError *jsonSerializationError;
         
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&error];
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&jsonSerializationError];
         
-            if (error) {
-                NSLog(@"Error serializing JSON: %@", error);
+            if (jsonSerializationError) {
+                NSLog(@"Error serializing JSON: %@", jsonSerializationError);
                 return;
             }
         
             NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         
-            UnitySendMessage("Renderer", "ReceiveMessage", [jsonString UTF8String])
+            UnitySendMessage("Renderer", "ReceiveMessage", [jsonString UTF8String]);
         }];
     
         NSLog(@"Face detection process ended");
