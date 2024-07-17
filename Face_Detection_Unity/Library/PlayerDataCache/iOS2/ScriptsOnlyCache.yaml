@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - FaceDetection
+    - FaceThingRenderer
     Unity.InputSystem.dll:
     - UnityEngine.InputSystem.InputSettings
     - UnityEngine.InputSystem.InputSystemObject
@@ -240,29 +241,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 20216}
     - Class: 114
-      Script: {instanceID: 20394}
+      Script: {instanceID: 20396}
     - Class: 114
-      Script: {instanceID: 20410}
+      Script: {instanceID: 20412}
     - Class: 114
-      Script: {instanceID: 20884}
+      Script: {instanceID: 20886}
     - Class: 114
-      Script: {instanceID: 20970}
+      Script: {instanceID: 20972}
     - Class: 114
-      Script: {instanceID: 21060}
+      Script: {instanceID: 21062}
     - Class: 114
-      Script: {instanceID: 21132}
+      Script: {instanceID: 21134}
     - Class: 114
-      Script: {instanceID: 21546}
+      Script: {instanceID: 21548}
     - Class: 114
-      Script: {instanceID: 21600}
+      Script: {instanceID: 21602}
     - Class: 114
-      Script: {instanceID: 22134}
+      Script: {instanceID: 22136}
     - Class: 114
-      Script: {instanceID: 22414}
+      Script: {instanceID: 22416}
     - Class: 114
-      Script: {instanceID: 22450}
-    - Class: 114
-      Script: {instanceID: 22802}
+      Script: {instanceID: 22452}
     - Class: 114
       Script: {instanceID: 23482}
     - Class: 114
@@ -300,19 +299,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 27022}
     - Class: 114
-      Script: {instanceID: 27118}
+      Script: {instanceID: 27120}
     - Class: 114
-      Script: {instanceID: 27208}
+      Script: {instanceID: 27210}
     - Class: 114
-      Script: {instanceID: 27342}
+      Script: {instanceID: 27344}
     - Class: 114
-      Script: {instanceID: 27484}
+      Script: {instanceID: 27486}
     - Class: 114
-      Script: {instanceID: 27770}
+      Script: {instanceID: 27774}
     - Class: 114
-      Script: {instanceID: 28100}
+      Script: {instanceID: 28104}
     - Class: 114
-      Script: {instanceID: 28582}
+      Script: {instanceID: 28586}
+    - Class: 114
+      Script: {instanceID: 32854}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -2252,10 +2253,10 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: ae6fe1c11265890df1a07cce8e7b6dac
+      Hash: b441de84fe5a745e4bf864f29df31d48
     assemblyName: Assembly-CSharp
     namespaceName: 
-    className: Renderer
+    className: FaceThingRenderer
   platform: 9
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

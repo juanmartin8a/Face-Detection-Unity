@@ -66,7 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/face_detection.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
-    <Compile Include="Assets/Scripts/renderer.cs" />
+    <Compile Include="Assets/Scripts/face_thing_renderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
