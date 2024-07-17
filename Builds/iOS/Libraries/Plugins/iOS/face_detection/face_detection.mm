@@ -117,7 +117,7 @@
         
             NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         
-            UnitySendMessage("XR Origin", "ReceiveMessage", [jsonString UTF8String]);
+            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
     
         NSLog(@"Face detection process ended");
