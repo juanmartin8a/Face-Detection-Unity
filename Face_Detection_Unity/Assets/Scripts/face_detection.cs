@@ -26,6 +26,9 @@ public class FaceDetection : MonoBehaviour
     private int processingFrameCount = 0;
     private float processedFps = 0.0f;
 
+    public int? ppImageWidth { get; private set; }
+    public int? ppImageHeight { get; private set; }
+
     void Awake()
     {
         cameraManager = GetComponent<ARCameraManager>();
@@ -127,6 +130,10 @@ public class FaceDetection : MonoBehaviour
 
                 }
 
+                if (!ppImageHeight.HasValue || !ppImageHeight.HasValue) {
+                    ppImageWidth = outWidth;
+                    ppImageHeight = outHeight;
+                }
 
                 var conversionParams = new XRCpuImage.ConversionParams
                 {
