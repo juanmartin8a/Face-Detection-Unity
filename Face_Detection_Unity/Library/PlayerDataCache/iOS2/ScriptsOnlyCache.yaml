@@ -190,9 +190,17 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 21
       Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
     - Class: 28
       Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
     - Class: 48
+      Script: {instanceID: 0}
+    - Class: 65
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
@@ -203,19 +211,19 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 16892}
+      Script: {instanceID: 16854}
     - Class: 114
-      Script: {instanceID: 16932}
+      Script: {instanceID: 16894}
     - Class: 114
-      Script: {instanceID: 17020}
+      Script: {instanceID: 16934}
     - Class: 114
-      Script: {instanceID: 17056}
+      Script: {instanceID: 17022}
     - Class: 114
-      Script: {instanceID: 17412}
+      Script: {instanceID: 17058}
     - Class: 114
-      Script: {instanceID: 17634}
+      Script: {instanceID: 17414}
     - Class: 114
-      Script: {instanceID: 17810}
+      Script: {instanceID: 17636}
     - Class: 114
       Script: {instanceID: 18026}
     - Class: 114
@@ -255,65 +263,65 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 21548}
     - Class: 114
-      Script: {instanceID: 21550}
+      Script: {instanceID: 21602}
     - Class: 114
-      Script: {instanceID: 21604}
+      Script: {instanceID: 22136}
     - Class: 114
-      Script: {instanceID: 22138}
+      Script: {instanceID: 22416}
     - Class: 114
-      Script: {instanceID: 22418}
+      Script: {instanceID: 22452}
     - Class: 114
-      Script: {instanceID: 22454}
+      Script: {instanceID: 23482}
     - Class: 114
-      Script: {instanceID: 23484}
+      Script: {instanceID: 23614}
     - Class: 114
-      Script: {instanceID: 23616}
+      Script: {instanceID: 23992}
     - Class: 114
-      Script: {instanceID: 23994}
+      Script: {instanceID: 24370}
     - Class: 114
-      Script: {instanceID: 24372}
+      Script: {instanceID: 24462}
     - Class: 114
-      Script: {instanceID: 24464}
+      Script: {instanceID: 24688}
     - Class: 114
-      Script: {instanceID: 24690}
+      Script: {instanceID: 24760}
     - Class: 114
-      Script: {instanceID: 24762}
+      Script: {instanceID: 25020}
     - Class: 114
-      Script: {instanceID: 25022}
+      Script: {instanceID: 25126}
     - Class: 114
-      Script: {instanceID: 25128}
+      Script: {instanceID: 25382}
     - Class: 114
-      Script: {instanceID: 25384}
+      Script: {instanceID: 26084}
     - Class: 114
-      Script: {instanceID: 26086}
+      Script: {instanceID: 26330}
     - Class: 114
-      Script: {instanceID: 26332}
+      Script: {instanceID: 26398}
     - Class: 114
-      Script: {instanceID: 26400}
+      Script: {instanceID: 26578}
     - Class: 114
-      Script: {instanceID: 26580}
+      Script: {instanceID: 26662}
     - Class: 114
-      Script: {instanceID: 26664}
+      Script: {instanceID: 26686}
     - Class: 114
-      Script: {instanceID: 26688}
+      Script: {instanceID: 26882}
     - Class: 114
-      Script: {instanceID: 26884}
+      Script: {instanceID: 27022}
     - Class: 114
-      Script: {instanceID: 27024}
+      Script: {instanceID: 27118}
     - Class: 114
-      Script: {instanceID: 27120}
+      Script: {instanceID: 27208}
     - Class: 114
-      Script: {instanceID: 27210}
+      Script: {instanceID: 27342}
     - Class: 114
-      Script: {instanceID: 27344}
+      Script: {instanceID: 27484}
     - Class: 114
-      Script: {instanceID: 27486}
+      Script: {instanceID: 27772}
     - Class: 114
-      Script: {instanceID: 27774}
+      Script: {instanceID: 28102}
     - Class: 114
-      Script: {instanceID: 28104}
+      Script: {instanceID: 28584}
     - Class: 114
-      Script: {instanceID: 28586}
+      Script: {instanceID: 28840}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -337,6 +345,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime
     namespaceName: UnityEngine.Rendering.Universal
     className: UniversalRenderPipelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 7ef703f2277340a563306696d258b338
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FaceThingRenderer
   - hash:
       serializedVersion: 2
       Hash: ed2c59b75f8f3cd8df4cd4387d965e71
@@ -469,12 +483,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime
     namespaceName: UnityEngine.Rendering.Universal
     className: XRSystemData
-  - hash:
-      serializedVersion: 2
-      Hash: 6573f9eac24a5a8cd9cae10d939d9a9d
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: FaceDetection
   - hash:
       serializedVersion: 2
       Hash: 1321993db8249e1e05e1e0492b2bbdc3
@@ -1033,12 +1041,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: Outline
-  - hash:
-      serializedVersion: 2
-      Hash: b441de84fe5a745e4bf864f29df31d48
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: FaceThingRenderer
   - hash:
       serializedVersion: 2
       Hash: 2deddcdd5f664164bb803747210cbba2
@@ -2257,6 +2259,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 6573f9eac24a5a8cd9cae10d939d9a9d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FaceDetection
   platform: 9
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

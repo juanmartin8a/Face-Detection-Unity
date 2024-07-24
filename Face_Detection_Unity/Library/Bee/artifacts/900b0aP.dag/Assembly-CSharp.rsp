@@ -332,6 +332,7 @@
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.30f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/face_detection.cs"
 "Assets/Scripts/face_thing_renderer.cs"
+"Assets/Scripts/face_utils.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 /unsafe+
