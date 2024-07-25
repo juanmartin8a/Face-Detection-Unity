@@ -1465,9 +1465,8 @@ struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2_marshaled_pinvoke
 struct Enum_t2A1A94B24E3B776EEF4E5E485E290BB9D4D072E2_marshaled_com
 {
 };
-struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+struct FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E 
 {
-	int32_t ___faceId;
 	float ___x;
 	float ___y;
 	float ___width;
@@ -1511,6 +1510,12 @@ struct GlyphValueRecord_t780927A39D46924E0D546A2AE5DDF1BB2B5A9C8E
 	float ___m_YPlacement;
 	float ___m_XAdvance;
 	float ___m_YAdvance;
+};
+struct HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 
+{
+	float ___x;
+	float ___y;
+	float ___z;
 };
 struct InputControlScheme_tB60FB32F414727140B32E1A0447679DC7ABC8434 
 {
@@ -2913,6 +2918,12 @@ struct Exception_t_marshaled_com
 	StackTraceU5BU5D_t32FBCB20930EAF5BAE3F450FF75228E5450DA0DF* ___captured_traces;
 	Il2CppSafeArray* ___native_trace_ips;
 	int32_t ___caught_in_unmanaged;
+};
+struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+{
+	int32_t ___trackingId;
+	FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E ___rect;
+	HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 ___headEulerAngles;
 };
 struct FeatureType_t794EFAD24C687FA0CDC5A313581A39F5CB61CC41 
 {

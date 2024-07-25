@@ -4,16 +4,18 @@
 
 + (NSDictionary *)dictionaryFromMLKFace:(MLKFace *)face {
     return @{
-        @"boundingBox": @{
+        @"trackingId": @(face.trackingID),
+        @"rect": @{
             @"x": @(face.frame.origin.x),
             @"y": @(face.frame.origin.y),
             @"width": @(face.frame.size.width),
             @"height": @(face.frame.size.height)
         },
-        @"headEulerAngleX": @(face.headEulerAngleX),
-        @"headEulerAngleY": @(face.headEulerAngleY),
-        @"headEulerAngleZ": @(face.headEulerAngleZ),
-        @"trackingID": @(face.trackingID)
+        @"headEulerAngles": @{
+            @"x": @(face.headEulerAngleX),
+            @"y": @(face.headEulerAngleY),
+            @"z": @(face.headEulerAngleZ)
+        },
     };
 }
 

@@ -2426,9 +2426,8 @@ struct EnumData_tB9520C9179D9D6C57B2BF70E76FE4EB4DC94A6F8_marshaled_com
 	int32_t ___unsigned;
 	int32_t ___serializable;
 };
-struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+struct FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E 
 {
-	int32_t ___faceId;
 	float ___x;
 	float ___y;
 	float ___width;
@@ -2514,6 +2513,12 @@ struct Hash128_t93367F504B687578F893CDBCD13FB95AC8A87A40
 {
 	uint64_t ___u64_0;
 	uint64_t ___u64_1;
+};
+struct HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 
+{
+	float ___x;
+	float ___y;
+	float ___z;
 };
 struct InclusiveRange_t1762A170B7A199C25DAC4CB39CB109710812A54D 
 {
@@ -5263,6 +5268,12 @@ struct Eyes_t239151DFDE1BB47589CEBD22261A793F142B211D
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_FixationPoint;
 	float ___m_LeftEyeOpenAmount;
 	float ___m_RightEyeOpenAmount;
+};
+struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+{
+	int32_t ___trackingId;
+	FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E ___rect;
+	HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 ___headEulerAngles;
 };
 struct Feature_t4F077DF9999D98A1C051A9A8983AB9A4F9D00F6A 
 {

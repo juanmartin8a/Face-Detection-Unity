@@ -1072,9 +1072,8 @@ struct EventHook_t1C9E2570B55940C342214BACB5E9EC889A113157_marshaled_com
 	Il2CppIUnknown* ___target;
 	Il2CppIUnknown* ___tag;
 };
-struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+struct FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E 
 {
-	int32_t ___faceId;
 	float ___x;
 	float ___y;
 	float ___width;
@@ -1141,6 +1140,12 @@ struct Hash128_t93367F504B687578F893CDBCD13FB95AC8A87A40
 {
 	uint64_t ___u64_0;
 	uint64_t ___u64_1;
+};
+struct HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 
+{
+	float ___x;
+	float ___y;
+	float ___z;
 };
 struct InputDevice_t882EE3EE8A71D8F5F38BA3F9356A49F24510E8BD 
 {
@@ -1678,6 +1683,12 @@ struct BackgroundPositionKeyword_tE680A05B983D256AADC8E2CF1CA169D004B8641B
 struct EventModifiers_t48244B043FBB42CDD555C6AC43279EC7158777AC 
 {
 	int32_t ___value__;
+};
+struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+{
+	int32_t ___trackingId;
+	FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E ___rect;
+	HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 ___headEulerAngles;
 };
 struct FeatureType_t794EFAD24C687FA0CDC5A313581A39F5CB61CC41 
 {

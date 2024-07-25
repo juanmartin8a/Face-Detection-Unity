@@ -1,8 +1,11 @@
 ScriptsOnlyBuild:
   usedScripts:
+    Assembly-CSharp-Editor.dll:
+    - ReadmeEditor
     Assembly-CSharp.dll:
     - FaceDetection
     - FaceThingRenderer
+    - Readme
     Unity.InputSystem.dll:
     - UnityEngine.InputSystem.InputSettings
     - UnityEngine.InputSystem.InputSystemObject
@@ -211,19 +214,19 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 16854}
+      Script: {instanceID: 16892}
     - Class: 114
-      Script: {instanceID: 16894}
+      Script: {instanceID: 16932}
     - Class: 114
-      Script: {instanceID: 16934}
+      Script: {instanceID: 17020}
     - Class: 114
-      Script: {instanceID: 17022}
+      Script: {instanceID: 17056}
     - Class: 114
-      Script: {instanceID: 17058}
+      Script: {instanceID: 17412}
     - Class: 114
-      Script: {instanceID: 17414}
+      Script: {instanceID: 17634}
     - Class: 114
-      Script: {instanceID: 17636}
+      Script: {instanceID: 17810}
     - Class: 114
       Script: {instanceID: 18026}
     - Class: 114
@@ -263,65 +266,65 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 21548}
     - Class: 114
-      Script: {instanceID: 21602}
+      Script: {instanceID: 21550}
     - Class: 114
-      Script: {instanceID: 22136}
+      Script: {instanceID: 21604}
     - Class: 114
-      Script: {instanceID: 22416}
+      Script: {instanceID: 22138}
     - Class: 114
-      Script: {instanceID: 22452}
+      Script: {instanceID: 22420}
     - Class: 114
-      Script: {instanceID: 23482}
+      Script: {instanceID: 22456}
     - Class: 114
-      Script: {instanceID: 23614}
+      Script: {instanceID: 23486}
     - Class: 114
-      Script: {instanceID: 23992}
+      Script: {instanceID: 23618}
     - Class: 114
-      Script: {instanceID: 24370}
+      Script: {instanceID: 23996}
     - Class: 114
-      Script: {instanceID: 24462}
+      Script: {instanceID: 24374}
     - Class: 114
-      Script: {instanceID: 24688}
+      Script: {instanceID: 24466}
     - Class: 114
-      Script: {instanceID: 24760}
+      Script: {instanceID: 24692}
     - Class: 114
-      Script: {instanceID: 25020}
+      Script: {instanceID: 24764}
     - Class: 114
-      Script: {instanceID: 25126}
+      Script: {instanceID: 25024}
     - Class: 114
-      Script: {instanceID: 25382}
+      Script: {instanceID: 25130}
     - Class: 114
-      Script: {instanceID: 26084}
+      Script: {instanceID: 25386}
     - Class: 114
-      Script: {instanceID: 26330}
+      Script: {instanceID: 26088}
     - Class: 114
-      Script: {instanceID: 26398}
+      Script: {instanceID: 26334}
     - Class: 114
-      Script: {instanceID: 26578}
+      Script: {instanceID: 26402}
     - Class: 114
-      Script: {instanceID: 26662}
+      Script: {instanceID: 26582}
     - Class: 114
-      Script: {instanceID: 26686}
+      Script: {instanceID: 26666}
     - Class: 114
-      Script: {instanceID: 26882}
+      Script: {instanceID: 26690}
     - Class: 114
-      Script: {instanceID: 27022}
+      Script: {instanceID: 26886}
     - Class: 114
-      Script: {instanceID: 27118}
+      Script: {instanceID: 27026}
     - Class: 114
-      Script: {instanceID: 27208}
+      Script: {instanceID: 27122}
     - Class: 114
-      Script: {instanceID: 27342}
+      Script: {instanceID: 27212}
     - Class: 114
-      Script: {instanceID: 27484}
+      Script: {instanceID: 27346}
     - Class: 114
-      Script: {instanceID: 27772}
+      Script: {instanceID: 27488}
     - Class: 114
-      Script: {instanceID: 28102}
+      Script: {instanceID: 27776}
     - Class: 114
-      Script: {instanceID: 28584}
+      Script: {instanceID: 28106}
     - Class: 114
-      Script: {instanceID: 28840}
+      Script: {instanceID: 28588}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -345,12 +348,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime
     namespaceName: UnityEngine.Rendering.Universal
     className: UniversalRenderPipelineAsset
-  - hash:
-      serializedVersion: 2
-      Hash: 7ef703f2277340a563306696d258b338
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: FaceThingRenderer
   - hash:
       serializedVersion: 2
       Hash: ed2c59b75f8f3cd8df4cd4387d965e71
@@ -483,6 +480,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime
     namespaceName: UnityEngine.Rendering.Universal
     className: XRSystemData
+  - hash:
+      serializedVersion: 2
+      Hash: 6573f9eac24a5a8cd9cae10d939d9a9d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FaceDetection
   - hash:
       serializedVersion: 2
       Hash: 1321993db8249e1e05e1e0492b2bbdc3
@@ -1041,6 +1044,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: Outline
+  - hash:
+      serializedVersion: 2
+      Hash: 347d3a3f6973ac3d82c54d0a52a7c297
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FaceThingRenderer
   - hash:
       serializedVersion: 2
       Hash: 2deddcdd5f664164bb803747210cbba2
@@ -2259,12 +2268,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 6573f9eac24a5a8cd9cae10d939d9a9d
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: FaceDetection
   platform: 9
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

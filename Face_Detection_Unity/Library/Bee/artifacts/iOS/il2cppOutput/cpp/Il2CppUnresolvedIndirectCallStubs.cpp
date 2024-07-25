@@ -1190,9 +1190,8 @@ struct EventInterests_tF375F3296A6689BC4B016F237123DB5457515EC8_marshaled_com
 	int32_t ___U3CwantsMouseEnterLeaveWindowU3Ek__BackingField;
 	int32_t ___U3CwantsLessLayoutEventsU3Ek__BackingField;
 };
-struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+struct FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E 
 {
-	int32_t ___faceId;
 	float ___x;
 	float ___y;
 	float ___width;
@@ -1278,6 +1277,12 @@ struct Hash128_t93367F504B687578F893CDBCD13FB95AC8A87A40
 {
 	uint64_t ___u64_0;
 	uint64_t ___u64_1;
+};
+struct HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 
+{
+	float ___x;
+	float ___y;
+	float ___z;
 };
 struct InputControlScheme_tB60FB32F414727140B32E1A0447679DC7ABC8434 
 {
@@ -3360,6 +3365,12 @@ struct Eyes_t239151DFDE1BB47589CEBD22261A793F142B211D
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_FixationPoint;
 	float ___m_LeftEyeOpenAmount;
 	float ___m_RightEyeOpenAmount;
+};
+struct FaceData_t1D4A81DA7AA05072E4F7E144AAFEFB3A5997340A 
+{
+	int32_t ___trackingId;
+	FaceRect_tE5554B2BBCACBB7916395395FB274082F363809E ___rect;
+	HeadEulerAngles_t1F8B1B43B7BD925D5731770B58E16F1B698A0E20 ___headEulerAngles;
 };
 struct Feature_t4F077DF9999D98A1C051A9A8983AB9A4F9D00F6A 
 {

@@ -7,16 +7,25 @@ using UnityEngine.XR.ARSubsystems;
 public class FaceThingRenderer : MonoBehaviour
 {
     public GameObject cubePrefab;
+    public FaceDetection faceDetection;
     private Dictionary<int, RectTransform> faces = new Dictionary<int, RectTransform>();
 
     void ReceiveMessage(string message) {
-        List<FaceData> faceData = JsonUtility.FromJson<List<FaceData>>(message);        
+        Debug.Log($"message received: {message}");
+        // Debug.Log("message is == []: " + message == "[]" );
+
         HashSet<int> detectedFaceIds = new HashSet<int>();
 
-        foreach (FaceData face in faceData) {
-            UpdateOrCreateCube(face.faceId, face.x, face.y, face.width, face.height);
-            detectedFaceIds.Add(face.faceId);
+        if (message != "[]") {
+            Debug.Log("message siiuuuu");
+            List<FaceData> faceData = JsonUtility.FromJson<List<FaceData>>(message);        
+
+            foreach (FaceData face in faceData) {
+                UpdateOrCreateCube(face.trackingId, face.rect.x, face.rect.y, face.rect.width, face.rect.height);
+                detectedFaceIds.Add(face.trackingId);
+            }
         }
+        Debug.Log("message noouuuuu");
 
         // if (cubeRectTransform != null)
         // {
@@ -50,10 +59,10 @@ public class FaceThingRenderer : MonoBehaviour
         }
     }
 
-    void UpdateOrCreateCube(int faceId, float x, float y, float width, float height)
+    void UpdateOrCreateCube(int trackingId, float x, float y, float width, float height)
     {
         RectTransform cubeTransform;
-        if (!faces.TryGetValue(faceId, out cubeTransform))
+        if (!faces.TryGetValue(trackingId, out cubeTransform))
         {
             GameObject cubeObject = Instantiate(cubePrefab, transform);
             cubeTransform = cubeObject.GetComponent<RectTransform>();
@@ -62,12 +71,12 @@ public class FaceThingRenderer : MonoBehaviour
                 Debug.LogError("Cube prefab must have a RectTransform component!");
                 return;
             }
-            faces[faceId] = cubeTransform;
+            faces[trackingId] = cubeTransform;
         }
 
         float cubeSize = width * 0.5f;
-        float cubeX = x + (width * 0.5f);
-        float cubeY = y + height + (cubeSize * 0.5f);
+        float cubeX = (float)(x + (width * 0.5f)) * (float)faceDetection.ppImageWidth / Screen.width;
+        float cubeY = (float)(y + height + (cubeSize * 0.5f)) * (float)faceDetection.ppImageHeight / Screen.height;
 
         cubeTransform.position = new Vector3(cubeX, cubeY, 0);
         cubeTransform.sizeDelta = new Vector2(cubeSize, cubeSize);

@@ -2,6 +2,7 @@
 	<assembly fullname="Assembly-CSharp">
 		<type fullname="FaceDetection" preserve="nothing"/>
 		<type fullname="FaceThingRenderer" preserve="nothing"/>
+		<type fullname="Readme" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.InputSystem">
 		<type fullname="UnityEngine.InputSystem.InputSettings" preserve="nothing"/>
