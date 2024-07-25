@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using System;
+using System.Diagnostics;
 
 public class FaceDetection : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class FaceDetection : MonoBehaviour
 
     private bool isLoading = false;
 
-    private System.Diagnostics.Stopwatch stopwatch;
+    private Stopwatch stopwatch;
     private int frameCount = 0;
     private float fps = 0.0f;
     
@@ -37,13 +38,12 @@ public class FaceDetection : MonoBehaviour
             Debug.LogError("ARCameraManager component not found on GameObject in Awake.");
             return;
         }
-        stopwatch = new System.Diagnostics.Stopwatch();
-        stopwatch.Start();
+        stopwatch = new Stopwatch();
     }
 
     void Start()
     {
-        UnityEngine.Debug.Log("Unity: FaceDetector initialization initialized");
+        Debug.Log("Unity: FaceDetector initialization initialized");
         if (cameraManager == null)
         {
             Debug.LogError("ARCameraManager component not found on GameObject in Start.");
@@ -93,7 +93,7 @@ public class FaceDetection : MonoBehaviour
             using (image)
             {
 
-                UnityEngine.Debug.Log($"AR Camera Resolution: {image.width}x{image.height}");
+                Debug.Log($"AR Camera Resolution: {image.width}x{image.height}");
 
                 float displayAspect = (float)Screen.width / Screen.height;
                 float imageAspect = (float)image.width / image.height;
@@ -130,7 +130,7 @@ public class FaceDetection : MonoBehaviour
 
                 }
 
-                if (!ppImageHeight.HasValue || !ppImageHeight.HasValue) {
+                 if (!ppImageHeight.HasValue || !ppImageHeight.HasValue) {
                     ppImageWidth = outWidth;
                     ppImageHeight = outHeight;
                 }
@@ -173,8 +173,8 @@ public class FaceDetection : MonoBehaviour
             fps = frameCount / (timePassed / 1000.0f);
             frameCount = 0;
 
-            processedFps = processingFrameCount / (timePassed / 1000.0f);
-            processingFrameCount = 0;
+            processedFps = processedFrameCount / (timePassed / 1000.0f);
+            processedFrameCount = 0;
 
             stopwatch.Restart();
 

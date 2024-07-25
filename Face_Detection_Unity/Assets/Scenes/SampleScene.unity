@@ -715,6 +715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 3252963865037812941, guid: b18534f92356b4e5680818e91c40e705,
     type: 3}
+  faceDetection: {fileID: 948233415}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
