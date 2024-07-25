@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class FaceThingRenderer : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class FaceThingRenderer : MonoBehaviour
 
         if (message != "[]") {
             Debug.Log("message siiuuuu");
-            List<FaceData> faceData = JsonUtility.FromJson<List<FaceData>>(message);        
+            List<FaceData> faceData = JsonConvert.DeserializeObject<List<FaceData>>(message);        
 
             foreach (FaceData face in faceData) {
                 UpdateOrCreateCube(face.trackingId, face.rect.x, face.rect.y, face.rect.width, face.rect.height);
