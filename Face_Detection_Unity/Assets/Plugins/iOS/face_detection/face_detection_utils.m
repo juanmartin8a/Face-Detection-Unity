@@ -4,7 +4,7 @@
 
 + (NSDictionary *)dictionaryFromMLKFace:(MLKFace *)face {
     return @{
-        @"trackingID": @(face.trackingID)
+        @"trackingId": @(face.trackingID),
         @"rect": @{
             @"x": @(face.frame.origin.x),
             @"y": @(face.frame.origin.y),
