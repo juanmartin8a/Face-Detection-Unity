@@ -7,42 +7,36 @@ public class FaceThingRenderer : MonoBehaviour
     public GameObject cubePrefab;
     public FaceDetection faceDetection;
     private Dictionary<int, RectTransform> faces = new Dictionary<int, RectTransform>();
+    private HashSet<int> detectedFaceIds = new HashSet<int>();
+    private List<int> cubesToRemove = new List<int>();
+    private List<FaceData> faceData = new List<FaceData>();
 
     void ReceiveMessage(string message) {
         Debug.Log($"message received: {message}");
-        // Debug.Log("message is == []: " + message == "[]" );
 
-        HashSet<int> detectedFaceIds = new HashSet<int>();
+        detectedFaceIds.Clear();
+        faceData.Clear();
 
         if (message != "[]") {
             Debug.Log("message siiuuuu");
-            List<FaceData> faceData = JsonConvert.DeserializeObject<List<FaceData>>(message);        
-
-            foreach (FaceData face in faceData) {
-                UpdateOrCreateCube(face.trackingId, face.rect.x, face.rect.y, face.rect.width, face.rect.height);
-                detectedFaceIds.Add(face.trackingId);
+            try
+            {
+                JsonConvert.PopulateObject(message, faceData);
+                foreach (FaceData face in faceData)
+                {
+                    UpdateOrCreateCube(face.trackingId, face.rect.x, face.rect.y, face.rect.width, face.rect.height);
+                    detectedFaceIds.Add(face.trackingId);
+                }
+            }
+            catch (JsonException e)
+            {
+                Debug.LogError($"Error parsing JSON: {e.Message}");
+                return;
             }
         }
         Debug.Log("message noouuuuu");
 
-        // if (cubeRectTransform != null)
-        // {
-        //     float cubeSize = faceData.width * cubeSizeFactor;
-        //     Vector2 position = new Vector2(
-        //         faceData.x + faceData.width / 2,
-        //         faceData.y + faceData.height * verticalOffsetFactor + cubeSize / 2
-        //     );
-        //     cubeRectTransform.anchoredPosition = position;
-        //
-        //     cubeRectTransform.sizeDelta = new Vector2(cubeSize, cubeSize);
-        //
-        //
-        //     cubeRectTransform.rotation = Quaternion.Euler(faceData.rotationX, faceData.rotationY, faceData.rotationZ);
-        //
-        //     cubeRectTransform.gameObject.SetActive(true);
-        // }
-
-        List<int> cubesToRemove = new List<int>();
+        cubesToRemove.Clear();
         foreach (var kvp in faces)
         {
             if (!detectedFaceIds.Contains(kvp.Key))
@@ -70,13 +64,18 @@ public class FaceThingRenderer : MonoBehaviour
                 return;
             }
             faces[trackingId] = cubeTransform;
+            Renderer cubeRenderer = cubeObject.GetComponent<Renderer>();
+            if (cubeRenderer != null)
+            {
+                cubeRenderer.material.color = Color.red;
+            }
         }
 
         float cubeSize = width * 0.5f;
         float cubeX = (float)(x + (width * 0.5f)) * (float)faceDetection.ppImageWidth / Screen.width;
         float cubeY = (float)(y + height + (cubeSize * 0.5f)) * (float)faceDetection.ppImageHeight / Screen.height;
 
-        cubeTransform.position = new Vector3(cubeX, cubeY, 0);
+        cubeTransform.anchoredPosition = new Vector2(cubeX, cubeY);
         cubeTransform.sizeDelta = new Vector2(cubeSize, cubeSize);
         cubeTransform.gameObject.SetActive(true);
     }
