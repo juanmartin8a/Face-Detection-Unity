@@ -36,21 +36,26 @@
 
 - (void)detectFaces:(const void*)imageBytes width:(int)width height:(int)height timestamp:(double)timestamp {
     NSLog(@"sapo");
-    
+
+    NSDictionary *pixelAttributes = @{(NSString *)kCVPixelBufferIOSurfacePropertiesKey: @{}};
+
+    size_t bytesPerRow = width * 4; // Assuming RGBA32 format
+    NSLog(@"Bytes per row (Expected in Objective-C): %zu", bytesPerRow);
+
     CVPixelBufferRef pixelBuffer = NULL;
-        CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_32BGRA, NULL, &pixelBuffer);
-        
-        if (status != kCVReturnSuccess) {
-            NSLog(@"Failed to create CVPixelBuffer");
-            return;
-        }
-    
-        NSLog(@"CVPixelBuffer created successfully");
-        
-        CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-        void *baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
-        memcpy(baseAddress, imageBytes, width * height * 4);
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+    CVReturn status = CVPixelBufferCreateWithBytes(kCFAllocatorDefault,
+                                                   width,
+                                                   height,
+                                                   kCVPixelFormatType_32BGRA,
+                                                   (void*)imageBytes,
+                                                   bytesPerRow,
+                                                   NULL,
+                                                   NULL,
+                                                   (__bridge CFDictionaryRef)pixelAttributes,
+                                                   &pixelBuffer);
+    if (status != kCVReturnSuccess) {
+        NSLog(@"Unable to create pixel buffer");
+    }
     
         NSLog(@"Data copied to CVPixelBuffer");
         
@@ -75,6 +80,7 @@
     
     // MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
     // NSLog(@"sapo 3");
+    [self saveImageFromSampleBuffer:sampleBuffer width:width height:height];
     
    MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithBuffer:sampleBuffer];
     NSLog(@"sapo 3");
@@ -121,6 +127,7 @@
         }];
     
         NSLog(@"Face detection process ended");
+
     
         CVPixelBufferRelease(pixelBuffer);
         CFRelease(videoInfo);
@@ -151,6 +158,116 @@
   }
 }
 
+- (void)saveImageFromSampleBuffer:(CMSampleBufferRef)sampleBuffer width:(int)width height:(int)height {
+    NSLog(@"Attempting to save image...");
+    
+    if (sampleBuffer == NULL) {
+        NSLog(@"Error: sampleBuffer is NULL");
+        return;
+    }
+    
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    if (imageBuffer == NULL) {
+        NSLog(@"Error: Unable to get image buffer from sample buffer");
+        return;
+    }
+    
+    CIImage *ciImage = [CIImage imageWithCVPixelBuffer:imageBuffer];
+    if (ciImage == nil) {
+        NSLog(@"Error: Unable to create CIImage from image buffer");
+        return;
+    }
+    
+    CIContext *temporaryContext = [CIContext contextWithOptions:nil];
+    CGImageRef cgImage = [temporaryContext createCGImage:ciImage fromRect:CGRectMake(0, 0, width, height)];
+    if (cgImage == NULL) {
+        NSLog(@"Error: Unable to create CGImage from CIImage");
+        return;
+    }
+    
+    UIImage *image = [UIImage imageWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    
+    if (image == nil) {
+        NSLog(@"Error: Unable to create UIImage from CGImage");
+        return;
+    }
+    
+    NSData *imageData = UIImagePNGRepresentation(image);
+    if (imageData == nil) {
+        NSLog(@"Error: Unable to create PNG representation of UIImage");
+        return;
+    }
+    
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+
+    // New code starts here
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+    NSString *dateString = [formatter stringFromDate:[NSDate date]];
+    
+    NSString *fileName = [NSString stringWithFormat:@"ObjCFrame_%@.png", dateString];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    
+    NSError *error = nil;
+    BOOL success = [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
+    
+    if (success) {
+        NSLog(@"Successfully saved image: %@", filePath);
+    } else {
+        NSLog(@"Failed to save image. Error: %@", error.localizedDescription);
+    }
+}
+
+- (void)saveImageFromPixelBuffer:(CVPixelBufferRef)pixelBuffer width:(int)width height:(int)height {
+    NSLog(@"Attempting to save image...");
+    
+    CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+    if (ciImage == nil) {
+        NSLog(@"Error: Unable to create CIImage from image buffer");
+        return;
+    }
+    
+    CIContext *temporaryContext = [CIContext contextWithOptions:nil];
+    CGImageRef cgImage = [temporaryContext createCGImage:ciImage fromRect:CGRectMake(0, 0, width, height)];
+    if (cgImage == NULL) {
+        NSLog(@"Error: Unable to create CGImage from CIImage");
+        return;
+    }
+    
+    UIImage *image = [UIImage imageWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    
+    if (image == nil) {
+        NSLog(@"Error: Unable to create UIImage from CGImage");
+        return;
+    }
+    
+    NSData *imageData = UIImagePNGRepresentation(image);
+    if (imageData == nil) {
+        NSLog(@"Error: Unable to create PNG representation of UIImage");
+        return;
+    }
+    
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+
+    // New code starts here
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+    NSString *dateString = [formatter stringFromDate:[NSDate date]];
+    
+    NSString *fileName = [NSString stringWithFormat:@"ObjCFrame_pixel_%@.png", dateString];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    
+    NSError *error = nil;
+    BOOL success = [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
+    
+    if (success) {
+        NSLog(@"Successfully saved image pixel: %@", filePath);
+    } else {
+        NSLog(@"Failed to save pixel image. Error: %@", error.localizedDescription);
+    }
+}
 
 @end
 

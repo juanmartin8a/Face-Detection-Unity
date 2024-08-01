@@ -102,6 +102,22 @@ public class FaceDetection : MonoBehaviour
                 int xOffset = 0, yOffset = 0;
                 int outWidth, outHeight;
 
+
+                // var conversionParams0 = new XRCpuImage.ConversionParams
+                // {
+                //     inputRect = new RectInt(0, 0, image.width, image.height),
+                //     outputDimensions = new Vector2Int(image.width, image.height),
+                //     outputFormat = TextureFormat.RGBA32,
+                //     transformation = XRCpuImage.Transformation.None
+                // };
+                //
+                // int size0 = image.GetConvertedDataSize(conversionParams0);
+                // var buffer0 = new NativeArray<byte>(size0, Allocator.Temp);
+                //
+                // image.Convert(conversionParams0, new IntPtr(buffer0.GetUnsafePtr()), buffer0.Length);
+                // 
+                // SaveImage2(buffer0, image.width, image.height);
+
                 if (displayAspect > imageAspect)
                 {
                     croppedWidth = image.width;
@@ -140,7 +156,7 @@ public class FaceDetection : MonoBehaviour
                     // inputRect = new RectInt(0, 0, image.width, image.height),
                     inputRect = new RectInt(xOffset, yOffset, croppedWidth, croppedHeight),
                     outputDimensions = new Vector2Int(outWidth, outHeight),
-                    outputFormat = TextureFormat.RGBA32,
+                    outputFormat = TextureFormat.BGRA32,
                     transformation = XRCpuImage.Transformation.None
                 };
 
@@ -155,6 +171,14 @@ public class FaceDetection : MonoBehaviour
                     image.Convert(conversionParams, new IntPtr(buffer.GetUnsafePtr()), buffer.Length);
                     void* ptr = NativeArrayUnsafeUtility.GetUnsafePtr(buffer);
                     double timestamp = (double)image.timestamp;
+                    SaveImage(buffer, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y);
+                    // Log bytes per row
+            int bytesPerRow = image.width * 4;
+            Debug.Log($"Bytes per row (Unity): {bytesPerRow}");
+
+            // Log a portion of the image data for verification
+            byte[] imageData = buffer.ToArray();
+            Debug.Log($"Image data (Unity): {BitConverter.ToString(imageData, 0, Math.Min(imageData.Length, 100))}");
                     DetectFaces((IntPtr)ptr, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y, timestamp);
                 }
                 finally
@@ -183,5 +207,30 @@ public class FaceDetection : MonoBehaviour
             Debug.Log($"FPS 2: {processedFps}");
         }
     }
+
+    private void SaveImage(NativeArray<byte> imageData, int width, int height) {
+    Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+    tex.LoadRawTextureData(imageData);
+    tex.Apply();
+
+    byte[] pngData = tex.EncodeToPNG();
+    string filename = $"UnityFrame_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
+    System.IO.File.WriteAllBytes(Application.persistentDataPath + "/" + filename, pngData);
+    Debug.Log($"Saved image: {Application.persistentDataPath}/{filename}");
+
+    Destroy(tex);
+}
+    private void SaveImage2(NativeArray<byte> imageData, int width, int height) {
+    Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+    tex.LoadRawTextureData(imageData);
+    tex.Apply();
+
+    byte[] pngData = tex.EncodeToPNG();
+    string filename = $"UnityFrame2_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
+    System.IO.File.WriteAllBytes(Application.persistentDataPath + "/" + filename, pngData);
+    Debug.Log($"Saved image 2: {Application.persistentDataPath}/{filename}");
+
+    Destroy(tex);
+}
 
 }
