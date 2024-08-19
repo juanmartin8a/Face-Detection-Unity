@@ -92,6 +92,7 @@ public class FaceDetection : MonoBehaviour
         {
             using (image)
             {
+                DeviceOrientation orientation = Input.deviceOrientation;
 
                 UnityEngine.Debug.Log($"AR Camera Resolution: {image.width}x{image.height}");
 
@@ -118,44 +119,45 @@ public class FaceDetection : MonoBehaviour
                 // 
                 // SaveImage2(buffer0, image.width, image.height);
 
-                if (displayAspect > imageAspect)
-                {
-                    croppedWidth = image.width;
-                    croppedHeight = Mathf.RoundToInt(croppedWidth / displayAspect);
-                    yOffset = (image.height - croppedHeight) / 2;
-                    if (croppedWidth > 1080) {
-                        outWidth = 1080;
-                        outHeight = Mathf.RoundToInt((float)outWidth / croppedWidth * croppedHeight);
-                    } else {
-                        outWidth = croppedWidth;
-                        outHeight = croppedHeight;
-                    }
-                }
-                else
-                {
-                    croppedHeight = image.height;
-                    croppedWidth = Mathf.RoundToInt(croppedHeight * displayAspect);
-                    xOffset = (image.width - croppedWidth) / 2;
-                    if (croppedHeight > 1080) {
-                        outHeight = 1080;
-                        outWidth = Mathf.RoundToInt((float)outHeight / croppedHeight * croppedWidth);
-                    } else {
-                        outHeight = croppedHeight;
-                        outWidth = croppedWidth;
-                    }
-
-                }
-
-                if (!ppImageHeight.HasValue || !ppImageHeight.HasValue) {
-                    ppImageWidth = outWidth;
-                    ppImageHeight = outHeight;
-                }
+                // if (displayAspect > imageAspect)
+                // {
+                //     croppedWidth = image.width;
+                //     croppedHeight = Mathf.RoundToInt(croppedWidth / displayAspect);
+                //     yOffset = (image.height - croppedHeight) / 2;
+                //     if (croppedWidth > 1080) {
+                //         outWidth = 1080;
+                //         outHeight = Mathf.RoundToInt((float)outWidth / croppedWidth * croppedHeight);
+                //     } else {
+                //         outWidth = croppedWidth;
+                //         outHeight = croppedHeight;
+                //     }
+                // }
+                // else
+                // {
+                //     croppedHeight = image.height;
+                //     croppedWidth = Mathf.RoundToInt(croppedHeight * displayAspect);
+                //     xOffset = (image.width - croppedWidth) / 2;
+                //     if (croppedHeight > 1080) {
+                //         outHeight = 1080;
+                //         outWidth = Mathf.RoundToInt((float)outHeight / croppedHeight * croppedWidth);
+                //     } else {
+                //         outHeight = croppedHeight;
+                //         outWidth = croppedWidth;
+                //     }
+                //
+                // }
+                //
+                // if (!ppImageHeight.HasValue || !ppImageHeight.HasValue) {
+                //     ppImageWidth = outWidth;
+                //     ppImageHeight = outHeight;
+                // }
 
                 var conversionParams = new XRCpuImage.ConversionParams
                 {
-                    // inputRect = new RectInt(0, 0, image.width, image.height),
-                    inputRect = new RectInt(xOffset, yOffset, croppedWidth, croppedHeight),
-                    outputDimensions = new Vector2Int(outWidth, outHeight),
+                    inputRect = new RectInt(0, 0, image.width, image.height),
+                    // inputRect = new RectInt(xOffset, yOffset, croppedWidth, croppedHeight),
+                    // outputDimensions = new Vector2Int(outWidth, outHeight),
+                    outputDimensions = new Vector2Int(image.width, image.height),
                     outputFormat = TextureFormat.BGRA32,
                     transformation = XRCpuImage.Transformation.None
                 };
