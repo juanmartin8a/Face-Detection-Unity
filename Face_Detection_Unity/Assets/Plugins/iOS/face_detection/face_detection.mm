@@ -3,6 +3,7 @@
 
 @implementation FaceDetection {
     MLKFaceDetector *faceDetector;
+    CIContext *ciContext;
 }
 
 + (instancetype)sharedInstance {
@@ -17,6 +18,7 @@
 - (instancetype)initPrivate {
     self = [super init];
     if (self) {
+        context = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer: @(NO)}];
         [self initializeFaceDetector];
     }
     return self;
@@ -34,7 +36,7 @@
     faceDetector = [MLKFaceDetector faceDetectorWithOptions:options];
 }
 
-- (void)detectFaces:(const void*)imageBytes width:(int)width height:(int)height timestamp:(double)timestamp {
+- (void)detectFaces:(const void*)imageBytes width:(int)width height:(int)height screenWidth:(int)screenWidth screenHeight:(int)screenHeight timestamp:(double)timestamp {
     NSLog(@"sapo");
 
     NSDictionary *pixelAttributes = @{(NSString *)kCVPixelBufferIOSurfacePropertiesKey: @{}};
@@ -56,8 +58,32 @@
     if (status != kCVReturnSuccess) {
         NSLog(@"Unable to create pixel buffer");
     }
+
+    size_t sourceWidth = CVPixelBufferGetWidth(pixelBuffer);
+    size_t sourceHeight = CVPixelBufferGetHeight(pixelBuffer);
+    size_t sourceBytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer);
+    uint8_t *sourceData = CVPixelBufferGetBaseAddress(pixelBuffer);
     
-        NSLog(@"Data copied to CVPixelBuffer");
+    size_t widthAC = sourceWidth;
+    size_t startingWidthCutPos = 0;
+    size_t heightAC = screenWidth / screenHeight * sourceWidth;
+    size_t startingHeightCutPos = (sourceHeight - heightAC) / 2;
+
+    CGRect cropRect = CGRectMake(startingWidthCutPos, startingHeightCutPos, widthAC, heightAC);
+
+    CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+
+    ciImage = [ciImage imageByCroppingToRect:cropRect];
+
+    CGFloat scale = 1080 / widthAC;
+    
+    ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(scale, scale)];
+    
+    ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeRotation(-M_PI_2)];
+    
+    [ciContext render:ciImage toCVPixelBuffer:pixelBuffer];
+    
+    NSLog(@"Data copied to CVPixelBuffer");
         
         // Create CMSampleBuffer from CVPixelBuffer
         CMSampleBufferRef sampleBuffer = NULL;
@@ -219,54 +245,15 @@
     }
 }
 
-- (void)saveImageFromPixelBuffer:(CMPixelBufferRef)pixelBuffer width:(int)width height:(int)height {
-    NSLog(@"Attempting to save image...");
-    
-    CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
-    if (ciImage == nil) {
-        NSLog(@"Error: Unable to create CIImage from image buffer");
-        return;
-    }
-    
-    CIContext *temporaryContext = [CIContext contextWithOptions:nil];
-    CGImageRef cgImage = [temporaryContext createCGImage:ciImage fromRect:CGRectMake(0, 0, width, height)];
-    if (cgImage == NULL) {
-        NSLog(@"Error: Unable to create CGImage from CIImage");
-        return;
-    }
-    
-    UIImage *image = [UIImage imageWithCGImage:cgImage];
-    CGImageRelease(cgImage);
-    
-    if (image == nil) {
-        NSLog(@"Error: Unable to create UIImage from CGImage");
-        return;
-    }
-    
-    NSData *imageData = UIImagePNGRepresentation(image);
-    if (imageData == nil) {
-        NSLog(@"Error: Unable to create PNG representation of UIImage");
-        return;
-    }
-    
-    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+- vImage_Error convertBGRAToARGB(vImage_Buffer *src, vImage_Buffer *dest) {
+    uint8_t permuteMap[4] = {3, 2, 1, 0}; // Map BGRA to RGBA
+    return vImagePermuteChannels_ARGB8888(src, dest, permuteMap, kvImageNoFlags);
+}
 
-    // New code starts here
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
-    NSString *dateString = [formatter stringFromDate:[NSDate date]];
-    
-    NSString *fileName = [NSString stringWithFormat:@"ObjCFrame_pixel_%@.png", dateString];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
-    
-    NSError *error = nil;
-    BOOL success = [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
-    
-    if (success) {
-        NSLog(@"Successfully saved image pixel: %@", filePath);
-    } else {
-        NSLog(@"Failed to save pixel image. Error: %@", error.localizedDescription);
-    }
+// Function to convert RGBA to BGRA
+- vImage_Error convertARGBToBGRA(vImage_Buffer *src, vImage_Buffer *dest) {
+    uint8_t permuteMap[4] = {3, 2, 1, 0}; // Map RGBA to BGRA
+    return vImagePermuteChannels_ARGB8888(src, dest, permuteMap, kvImageNoFlags);
 }
 
 @end
@@ -277,8 +264,8 @@ extern "C" {
     }
 
 
-    void DetectFaces(const void* imageBytes, int width, int height, double timestamp) {
-        [[FaceDetection sharedInstance] detectFaces:imageBytes width:width height:height timestamp:timestamp];
+    void DetectFaces(const void* imageBytes, int width, int height, int screenWidth, int screenHeight, double timestamp) {
+        [[FaceDetection sharedInstance] detectFaces:imageBytes width:width height:height screenWidth:screenWidth screenHeight:screenHeight timestamp:timestamp];
     }
 
 }
