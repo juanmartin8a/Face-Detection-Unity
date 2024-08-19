@@ -96,12 +96,12 @@ public class FaceDetection : MonoBehaviour
 
                 UnityEngine.Debug.Log($"AR Camera Resolution: {image.width}x{image.height}");
 
-                float displayAspect = (float)Screen.width / Screen.height;
-                float imageAspect = (float)image.width / image.height;
+                // float displayAspect = (float)Screen.width / Screen.height;
+                // float imageAspect = (float)image.width / image.height;
 
-                int croppedWidth, croppedHeight;
-                int xOffset = 0, yOffset = 0;
-                int outWidth, outHeight;
+                // int croppedWidth, croppedHeight;
+                // int xOffset = 0, yOffset = 0;
+                // int outWidth, outHeight;
 
 
                 // var conversionParams0 = new XRCpuImage.ConversionParams
@@ -165,22 +165,22 @@ public class FaceDetection : MonoBehaviour
                 int size = image.GetConvertedDataSize(conversionParams);
                 var buffer = new NativeArray<byte>(size, Allocator.Temp);
 
-                Debug.Log($"AR Camera Resolution 2: {croppedWidth}x{croppedHeight}");
-                Debug.Log($"AR Camera Resolution 3: {outWidth}x{outHeight}");
+                // Debug.Log($"AR Camera Resolution 2: {croppedWidth}x{croppedHeight}");
+                // Debug.Log($"AR Camera Resolution 3: {outWidth}x{outHeight}");
 
                 try
                 {
                     image.Convert(conversionParams, new IntPtr(buffer.GetUnsafePtr()), buffer.Length);
                     void* ptr = NativeArrayUnsafeUtility.GetUnsafePtr(buffer);
                     double timestamp = (double)image.timestamp;
-                    SaveImage(buffer, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y);
+                    // SaveImage(buffer, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y);
                     // Log bytes per row
-            int bytesPerRow = image.width * 4;
-            Debug.Log($"Bytes per row (Unity): {bytesPerRow}");
+            // int bytesPerRow = image.width * 4;
+            // Debug.Log($"Bytes per row (Unity): {bytesPerRow}");
 
             // Log a portion of the image data for verification
-            byte[] imageData = buffer.ToArray();
-            Debug.Log($"Image data (Unity): {BitConverter.ToString(imageData, 0, Math.Min(imageData.Length, 100))}");
+            // byte[] imageData = buffer.ToArray();
+            // Debug.Log($"Image data (Unity): {BitConverter.ToString(imageData, 0, Math.Min(imageData.Length, 100))}");
                     DetectFaces((IntPtr)ptr, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y, timestamp);
                 }
                 finally

@@ -18,7 +18,7 @@
 - (instancetype)initPrivate {
     self = [super init];
     if (self) {
-        context = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer: @(NO)}];
+        ciContext = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer: @(NO)}];
         [self initializeFaceDetector];
     }
     return self;
@@ -243,17 +243,6 @@
     } else {
         NSLog(@"Failed to save image. Error: %@", error.localizedDescription);
     }
-}
-
-- vImage_Error convertBGRAToARGB(vImage_Buffer *src, vImage_Buffer *dest) {
-    uint8_t permuteMap[4] = {3, 2, 1, 0}; // Map BGRA to RGBA
-    return vImagePermuteChannels_ARGB8888(src, dest, permuteMap, kvImageNoFlags);
-}
-
-// Function to convert RGBA to BGRA
-- vImage_Error convertARGBToBGRA(vImage_Buffer *src, vImage_Buffer *dest) {
-    uint8_t permuteMap[4] = {3, 2, 1, 0}; // Map RGBA to BGRA
-    return vImagePermuteChannels_ARGB8888(src, dest, permuteMap, kvImageNoFlags);
 }
 
 @end
