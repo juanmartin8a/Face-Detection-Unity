@@ -2,11 +2,12 @@
 #import <MLKitVision/MLKitVision.h>
 #import <AVFoundation/AVFoundation.h>
 #import <UnityAppController.h>
+#import <UIKit/UIKit.h>
 
 @interface FaceDetection : NSObject
 
 + (instancetype)sharedInstance;
 - (void)initializeFaceDetector;
-- (void)detectFaces:(const void*)imageData width:(int)width height:(int)height timestamp:(double)timestamp;
+- (void)detectFaces:(const void*)imageData width:(int)width height:(int)height screenWidth:(int)screenWidth screenHeight:(int)screenHeight timestamp:(double)timestamp;
 
 @end

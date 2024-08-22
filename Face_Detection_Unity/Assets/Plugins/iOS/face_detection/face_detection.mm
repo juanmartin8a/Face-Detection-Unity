@@ -39,7 +39,11 @@
 - (void)detectFaces:(const void*)imageBytes width:(int)width height:(int)height screenWidth:(int)screenWidth screenHeight:(int)screenHeight timestamp:(double)timestamp {
     NSLog(@"sapo");
 
-    NSDictionary *pixelAttributes = @{(NSString *)kCVPixelBufferIOSurfacePropertiesKey: @{}};
+//    NSDictionary *pixelAttributes = @{(NSString *)kCVPixelBufferIOSurfacePropertiesKey: @{}};
+    NSDictionary *pixelAttributes = @{
+                (NSString *)kCVPixelBufferCGImageCompatibilityKey: @YES,
+                (NSString *)kCVPixelBufferCGBitmapContextCompatibilityKey: @YES,
+            };
 
     size_t bytesPerRow = width * 4; // Assuming RGBA32 format
     NSLog(@"Bytes per row (Expected in Objective-C): %zu", bytesPerRow);
@@ -58,30 +62,61 @@
     if (status != kCVReturnSuccess) {
         NSLog(@"Unable to create pixel buffer");
     }
-
+    
     size_t sourceWidth = CVPixelBufferGetWidth(pixelBuffer);
     size_t sourceHeight = CVPixelBufferGetHeight(pixelBuffer);
-    size_t sourceBytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer);
-    uint8_t *sourceData = CVPixelBufferGetBaseAddress(pixelBuffer);
+    
+    CGFloat screenWidth2 = [UIScreen mainScreen].bounds.size.width;
+    // Get screen height
+    CGFloat screenHeight2 = [UIScreen mainScreen].bounds.size.height;
     
     size_t widthAC = sourceWidth;
-    size_t startingWidthCutPos = 0;
-    size_t heightAC = screenWidth / screenHeight * sourceWidth;
+    size_t heightAC = (screenWidth2 / screenHeight2) * sourceWidth;
     size_t startingHeightCutPos = (sourceHeight - heightAC) / 2;
 
-    CGRect cropRect = CGRectMake(startingWidthCutPos, startingHeightCutPos, widthAC, heightAC);
+    CGRect cropRect = CGRectMake(0, startingHeightCutPos, widthAC, heightAC);
 
     CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
 
     ciImage = [ciImage imageByCroppingToRect:cropRect];
 
-    CGFloat scale = 1080 / widthAC;
+    CGFloat scale = 1080 / ciImage.extent.size.width;
     
     ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeScale(scale, scale)];
     
     ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeRotation(-M_PI_2)];
     
-    [ciContext render:ciImage toCVPixelBuffer:pixelBuffer];
+    ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeTranslation(-ciImage.extent.origin.x, -ciImage.extent.origin.y)];
+        
+    NSDictionary *options2 = @{
+            (id)kCVPixelBufferCGImageCompatibilityKey: @YES,
+            (id)kCVPixelBufferCGBitmapContextCompatibilityKey: @YES
+        };
+    
+        CGSize imageSize = ciImage.extent.size;
+        NSLog(@"Image Size: Width = %f, Height = %f", imageSize.width, imageSize.height);
+        NSLog(@"widthAC: %zu, heightAC: %zu", widthAC, heightAC);
+
+        
+        CVPixelBufferRef pixelBuffer2 = NULL;
+        CVReturn status2 = CVPixelBufferCreate(kCFAllocatorDefault,
+                                              imageSize.width,
+                                              imageSize.height,
+                                              kCVPixelFormatType_32BGRA,
+                                              (__bridge CFDictionaryRef)options2,
+                                              &pixelBuffer2);
+        
+        if (status2 != kCVReturnSuccess) {
+            NSLog(@"Failed to create pixel buffer 2");
+//            return NULL;
+        }
+    
+    [ciContext render:ciImage toCVPixelBuffer:pixelBuffer2];
+    CVPixelBufferRelease(pixelBuffer);
+//    ciContext.render(image, to: pixelBuffer)
+    [self saveImageFromPixelBuffer:pixelBuffer2 width:imageSize.width height:imageSize.height];
+    
+//    [self saveImageFromPixelBuffer:pixelBuffer width:heightAC * scale height:widthAC * scale];
     
     NSLog(@"Data copied to CVPixelBuffer");
         
@@ -95,9 +130,9 @@
             .decodeTimeStamp = kCMTimeInvalid
         };
         CMVideoFormatDescriptionRef videoInfo = NULL;
-        CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer, &videoInfo);
+        CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer2, &videoInfo);
         
-        CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, true, NULL, NULL, videoInfo, &timingInfo, &sampleBuffer);
+        CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer2, true, NULL, NULL, videoInfo, &timingInfo, &sampleBuffer);
     if (sampleBuffer == NULL) {
         NSLog(@"Failed to create CMSampleBuffer from NSData");
         return;
@@ -106,7 +141,7 @@
     
     // MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
     // NSLog(@"sapo 3");
-    [self saveImageFromSampleBuffer:sampleBuffer width:width height:height];
+    [self saveImageFromSampleBuffer:sampleBuffer width:imageSize.width height:imageSize.height];
     
    MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithBuffer:sampleBuffer];
     NSLog(@"sapo 3");
@@ -155,7 +190,7 @@
         NSLog(@"Face detection process ended");
 
     
-        CVPixelBufferRelease(pixelBuffer);
+        CVPixelBufferRelease(pixelBuffer2);
         CFRelease(videoInfo);
         CFRelease(sampleBuffer);
 }
@@ -245,6 +280,61 @@
     }
 }
 
+- (void)saveImageFromPixelBuffer:(CVPixelBufferRef)pixelBuffer width:(int)width height:(int)height {
+    NSLog(@"Attempting to save image...");
+    
+    if (pixelBuffer == NULL) {
+        NSLog(@"Error: pixelBuffer is NULL");
+        return;
+    }
+    
+    CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+    if (ciImage == nil) {
+        NSLog(@"Error: Unable to create CIImage from image buffer");
+        return;
+    }
+    
+    CIContext *temporaryContext = [CIContext contextWithOptions:nil];
+    CGImageRef cgImage = [temporaryContext createCGImage:ciImage fromRect:CGRectMake(0, 0, width, height)];
+    if (cgImage == NULL) {
+        NSLog(@"Error: Unable to create CGImage from CIImage");
+        return;
+    }
+    
+    UIImage *image = [UIImage imageWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    
+    if (image == nil) {
+        NSLog(@"Error: Unable to create UIImage from CGImage");
+        return;
+    }
+    
+    NSData *imageData = UIImagePNGRepresentation(image);
+    if (imageData == nil) {
+        NSLog(@"Error: Unable to create PNG representation of UIImage");
+        return;
+    }
+    
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+
+    // New code starts here
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+    NSString *dateString = [formatter stringFromDate:[NSDate date]];
+    
+    NSString *fileName = [NSString stringWithFormat:@"ObjCFrame_pixel_%@.png", dateString];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    
+    NSError *error = nil;
+    BOOL success = [imageData writeToFile:filePath options:NSDataWritingAtomic error:&error];
+    
+    if (success) {
+        NSLog(@"Successfully saved pixel image: %@", filePath);
+    } else {
+        NSLog(@"Failed to save image. Error: %@", error.localizedDescription);
+    }
+}
+
 @end
 
 extern "C" {
@@ -258,4 +348,5 @@ extern "C" {
     }
 
 }
+
 
