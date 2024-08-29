@@ -5,17 +5,19 @@ using System.Runtime.InteropServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using System;
+using UnityEngine.XR.ARKit;
 
 public class FaceDetection : MonoBehaviour
 {
     private ARCameraManager cameraManager;
     private Texture2D cameraTexture;
+    // public ARSession arSession;
 
     [DllImport("__Internal")]
     private static extern void InitializeFaceDetector();
 
     [DllImport("__Internal")]
-    private static extern void DetectFaces(IntPtr imgBytes, int width, int height, double timestamp);
+    private static extern void DetectFaces(IntPtr imgBytes, int width, int height, int screenWidth, int screenHeight, double timestamp);
 
     private bool isLoading = false;
 
@@ -92,7 +94,7 @@ public class FaceDetection : MonoBehaviour
         {
             using (image)
             {
-                DeviceOrientation orientation = Input.deviceOrientation;
+                // DeviceOrientation orientation = Input.deviceOrientation;
 
                 UnityEngine.Debug.Log($"AR Camera Resolution: {image.width}x{image.height}");
 
@@ -181,7 +183,7 @@ public class FaceDetection : MonoBehaviour
             // Log a portion of the image data for verification
             // byte[] imageData = buffer.ToArray();
             // Debug.Log($"Image data (Unity): {BitConverter.ToString(imageData, 0, Math.Min(imageData.Length, 100))}");
-                    DetectFaces((IntPtr)ptr, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y, timestamp);
+                    DetectFaces((IntPtr)ptr, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y, Screen.width, Screen.height, timestamp);
                 }
                 finally
                 {

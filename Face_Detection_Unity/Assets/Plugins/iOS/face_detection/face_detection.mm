@@ -18,6 +18,7 @@
 - (instancetype)initPrivate {
     self = [super init];
     if (self) {
+        _trackingRequests = [NSMutableArray array];
         ciContext = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer: @(NO)}];
         [self initializeFaceDetector];
     }
@@ -86,113 +87,208 @@
     
     ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeRotation(-M_PI_2)];
     
-    ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeTranslation(-ciImage.extent.origin.x, -ciImage.extent.origin.y)];
-        
-    NSDictionary *options2 = @{
-            (id)kCVPixelBufferCGImageCompatibilityKey: @YES,
-            (id)kCVPixelBufferCGBitmapContextCompatibilityKey: @YES
-        };
+//    let context = CIContext(options: nil)
+//    UIImage *uiImage = nil;
+//
+//    CGImageRef cgImage = [ciContext createCGImage:ciImage fromRect:[ciImage extent]];
+//    if (cgImage) {
+//        uiImage = [UIImage imageWithCGImage:cgImage];
+//        CGImageRelease(cgImage); // Don't forget to release the CGImageRef
+//    }
+//    
+//    ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeRotation(-M_PI_2)];
+//    
+//    ciImage = [ciImage imageByApplyingTransform:CGAffineTransformMakeTranslation(-ciImage.extent.origin.x, -ciImage.extent.origin.y)];
+//        
+//    NSDictionary *options2 = @{
+//            (id)kCVPixelBufferCGImageCompatibilityKey: @YES,
+//            (id)kCVPixelBufferCGBitmapContextCompatibilityKey: @YES
+//        };
+//    
+//        CGSize imageSize = ciImage.extent.size;
+//        NSLog(@"Image Size: Width = %f, Height = %f", imageSize.width, imageSize.height);
+//        NSLog(@"widthAC: %zu, heightAC: %zu", widthAC, heightAC);
+//
+//        
+//        CVPixelBufferRef pixelBuffer2 = NULL;
+//        CVReturn status2 = CVPixelBufferCreate(kCFAllocatorDefault,
+//                                              imageSize.width,
+//                                              imageSize.height,
+//                                              kCVPixelFormatType_32BGRA,
+//                                              (__bridge CFDictionaryRef)options2,
+//                                              &pixelBuffer2);
+//        
+//        if (status2 != kCVReturnSuccess) {
+//            NSLog(@"Failed to create pixel buffer 2");
+////            return NULL;
+//        }
+//    
+//    [ciContext render:ciImage toCVPixelBuffer:pixelBuffer2];
+//    CVPixelBufferRelease(pixelBuffer);
+////    ciContext.render(image, to: pixelBuffer)
+////    [self save/*ImageFromPixelBuffer:pixelBuffer2 width:imageSize.width height:imageS*/ize.height];
+//    
+////    [self saveImageFromPixelBuffer:pixelBuffer width:heightAC * scale height:widthAC * scale];
+//    
+//    NSLog(@"Data copied to CVPixelBuffer");
+//        
+//        // Create CMSampleBuffer from CVPixelBuffer
+//        CMSampleBufferRef sampleBuffer = NULL;
+//        CMTime presentationTime = CMTimeMakeWithSeconds(timestamp, 1000000000);  // Using nanosecond precision
+//        
+//        CMSampleTimingInfo timingInfo = {
+//            .duration = kCMTimeInvalid,
+//            .presentationTimeStamp = presentationTime,
+//            .decodeTimeStamp = kCMTimeInvalid
+//        };
+//        CMVideoFormatDescriptionRef videoInfo = NULL;
+//        CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer2, &videoInfo);
+//        
+//        CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer2, true, NULL, NULL, videoInfo, &timingInfo, &sampleBuffer);
+//    if (sampleBuffer == NULL) {
+//        NSLog(@"Failed to create CMSampleBuffer from NSData");
+//        return;
+//    }
+//    NSLog(@"sapo 2");
+//    
+//    MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:uiImage];
+////    // NSLog(@"sapo 3");
+//////    [self saveImageFromSampleBuffer:sampleBuffer width:imageSize.width height:imageSize.height];
+////    
+////   MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithBuffer:sampleBuffer];
+////    NSLog(@"sapo 3");
+//    visionImage.orientation =
+//      [self imageOrientationFromDeviceOrientation:UIDevice.currentDevice.orientation
+//                                   cameraPosition:AVCaptureDevicePositionBack];
+////    NSLog(@"saposalsa: %ld", visionImage.orientation);
+////    NSLog(@"saposalsa 2: %@", visionImage.accessibilityHint.description);
+////    NSLog(@"saposalsa 3: %lu", visionImage.accessibilityHint.length);
+////    NSLog(@"saposalsa 4: %@", visionImage.accessibilityHint);
+//////
+//    NSLog(@"Starting face detection");
+//    
+//    [faceDetector processImage:visionImage
+//                    completion:^(NSArray<MLKFace *> *faces,
+//                                 NSError *error) {
+//            if (error != nil) {
+//                // Handle error
+//                NSLog(@"Face detection error: %@", error.localizedDescription);
+//                return;
+//            }
+//        
+//            NSLog(@"Face detection completed. Found %lu faces", faces.count);
+//            NSMutableArray *faceDictionaries = [NSMutableArray arrayWithCapacity:faces.count];
+//
+//            for (MLKFace *face in faces) {
+//                [faceDictionaries addObject:[FaceDetectionUtils dictionaryFromMLKFace:face]];
+//                // Process each face
+////                NSLog(@"Face detected with bounding box: %@", NSStringFromCGRect(face.frame));
+//                CGRect frame = face.frame;
+//                
+//                // UnitySendMessage("Drawer", "RecieveMessage", );
+//                NSLog(@"Face detected at %@", NSStringFromCGRect(frame));
+////                NSLog(@"Face detected at %@ at time %f", NSStringFromCGRect(frame), CMTimeGetSeconds(presentationTime));
+//            }
+//
+//            NSError *jsonSerializationError;
+//        
+//            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&jsonSerializationError];
+//        
+//            if (jsonSerializationError) {
+//                NSLog(@"Error serializing JSON: %@", jsonSerializationError);
+//                return;
+//            }
+//        
+//            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//        
+//            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
+//        }];
     
-        CGSize imageSize = ciImage.extent.size;
-        NSLog(@"Image Size: Width = %f, Height = %f", imageSize.width, imageSize.height);
-        NSLog(@"widthAC: %zu, heightAC: %zu", widthAC, heightAC);
-
-        
-        CVPixelBufferRef pixelBuffer2 = NULL;
-        CVReturn status2 = CVPixelBufferCreate(kCFAllocatorDefault,
-                                              imageSize.width,
-                                              imageSize.height,
-                                              kCVPixelFormatType_32BGRA,
-                                              (__bridge CFDictionaryRef)options2,
-                                              &pixelBuffer2);
-        
-        if (status2 != kCVReturnSuccess) {
-            NSLog(@"Failed to create pixel buffer 2");
-//            return NULL;
-        }
+//    NSMutableArray *requests = [NSMutableArray array];
     
-    [ciContext render:ciImage toCVPixelBuffer:pixelBuffer2];
-    CVPixelBufferRelease(pixelBuffer);
-//    ciContext.render(image, to: pixelBuffer)
-    [self saveImageFromPixelBuffer:pixelBuffer2 width:imageSize.width height:imageSize.height];
-    
-//    [self saveImageFromPixelBuffer:pixelBuffer width:heightAC * scale height:widthAC * scale];
-    
-    NSLog(@"Data copied to CVPixelBuffer");
-        
-        // Create CMSampleBuffer from CVPixelBuffer
-        CMSampleBufferRef sampleBuffer = NULL;
-        CMTime presentationTime = CMTimeMakeWithSeconds(timestamp, 1000000000);  // Using nanosecond precision
-        
-        CMSampleTimingInfo timingInfo = {
-            .duration = kCMTimeInvalid,
-            .presentationTimeStamp = presentationTime,
-            .decodeTimeStamp = kCMTimeInvalid
-        };
-        CMVideoFormatDescriptionRef videoInfo = NULL;
-        CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer2, &videoInfo);
-        
-        CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer2, true, NULL, NULL, videoInfo, &timingInfo, &sampleBuffer);
-    if (sampleBuffer == NULL) {
-        NSLog(@"Failed to create CMSampleBuffer from NSData");
-        return;
-    }
-    NSLog(@"sapo 2");
-    
-    // MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
-    // NSLog(@"sapo 3");
-    [self saveImageFromSampleBuffer:sampleBuffer width:imageSize.width height:imageSize.height];
-    
-   MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithBuffer:sampleBuffer];
-    NSLog(@"sapo 3");
-    visionImage.orientation =
-      [self imageOrientationFromDeviceOrientation:UIDevice.currentDevice.orientation
-                                   cameraPosition:AVCaptureDevicePositionBack];
-    
-    NSLog(@"Starting face detection");
-    
-    [faceDetector processImage:visionImage
-                    completion:^(NSArray<MLKFace *> *faces,
-                                 NSError *error) {
-            if (error != nil) {
-                // Handle error
+//    for (VNTrackObjectRequest *trackingRequest in self.trackingRequests) {
+//            if (trackingRequest.results.firstObject.confidence > 0.3) { // Keep tracking only if confidence is high
+//                [requests addObject:trackingRequest];
+//            }
+//        }
+//    
+    VNDetectFaceRectanglesRequest *faceDetectionRequest = [[VNDetectFaceRectanglesRequest alloc] initWithCompletionHandler:^(VNRequest *request, NSError * _Nullable error) {
+            if (error) {
                 NSLog(@"Face detection error: %@", error.localizedDescription);
                 return;
             }
         
-            NSLog(@"Face detection completed. Found %lu faces", faces.count);
-            NSMutableArray *faceDictionaries = [NSMutableArray arrayWithCapacity:faces.count];
+//            NSArray<VNFaceObservation *> *faceObservations = request.results;
+        
+            NSLog(@"Detected faces: %lu", (unsigned long)request.results.count);
 
-            for (MLKFace *face in faces) {
-                [faceDictionaries addObject:[FaceDetectionUtils dictionaryFromMLKFace:face]];
-                // Process each face
-//                NSLog(@"Face detected with bounding box: %@", NSStringFromCGRect(face.frame));
-                CGRect frame = face.frame;
-                
-                // UnitySendMessage("Drawer", "RecieveMessage", );
-                NSLog(@"Face detected at %@ at time %f", NSStringFromCGRect(frame), CMTimeGetSeconds(presentationTime));
-            }
+//            [self.trackingRequests removeAllObjects];
+            for (VNFaceObservation *observation in request.results) {
+//                VNTrackObjectRequest *trackingRequest = [[VNTrackObjectRequest alloc] initWithDetectedObjectObservation:observation];
+//                trackingRequest.trackingLevel = VNRequestTrackingLevelFast;
+//                [self.trackingRequests addObject:trackingRequest];
+                CGRect boundingBox = observation.boundingBox;
 
-            NSError *jsonSerializationError;
-        
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&jsonSerializationError];
-        
-            if (jsonSerializationError) {
-                NSLog(@"Error serializing JSON: %@", jsonSerializationError);
-                return;
+                // Convert normalized bounding box to image coordinates
+                CGFloat imageWidth = ciImage.extent.size.width;
+                CGFloat imageHeight = ciImage.extent.size.height;
+                CGRect convertedBox = CGRectMake(boundingBox.origin.x * imageWidth,
+                                                 (1 - boundingBox.origin.y - boundingBox.size.height) * imageHeight,
+                                                 boundingBox.size.width * imageWidth,
+                                                 boundingBox.size.height * imageHeight);
+
+                NSLog(@"Detected face at: %@", NSStringFromCGRect(convertedBox));
+//                NSLog(@"face roll: %@", observation.roll);
+//                NSLog(@"face yaw: %@", observation.yaw);
+//                NSLog(@"face pitch: %@", observation.pitch);
+//                NSLog(@"face quality: %@", observation.faceCaptureQuality);
             }
-        
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
-            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
+    
+//        [requests addObject:faceDetectionRequest];
+
+        VNImageRequestHandler *handler = [[VNImageRequestHandler alloc] initWithCIImage:ciImage options:@{}];
+        NSError *error = nil;
+        [handler performRequests:@[faceDetectionRequest] error:&error];
+
+        if (error) {
+            NSLog(@"Error performing vision request: %@", error.localizedDescription);
+        }
+    
+//    for (VNTrackObjectRequest *trackingRequest in self.trackingRequests) {
+//            VNDetectedObjectObservation *observation = (VNDetectedObjectObservation *)trackingRequest.results.firstObject;
+//
+////            if (observation.confidence > 0.1) { // Process tracked face only if confidence is high
+//                CGRect boundingBox = observation.boundingBox;
+//                // Convert bounding box to image coordinates as needed
+//                NSLog(@"Tracked face at: %@", NSStringFromCGRect(boundingBox));
+////                                CGRect boundingBox = observation.boundingBox;
+//                
+//                                // Convert normalized bounding box to image coordinates
+//                                CGFloat imageWidth = ciImage.extent.size.width;
+//                                CGFloat imageHeight = ciImage.extent.size.height;
+//                                CGRect convertedBox = CGRectMake(boundingBox.origin.x * imageWidth,
+//                                                                 (1 - boundingBox.origin.y - boundingBox.size.height) * imageHeight,
+//                                                                 boundingBox.size.width * imageWidth,
+//                                                                 boundingBox.size.height * imageHeight);
+//                
+//                                NSLog(@"tracked face at: %@", NSStringFromCGRect(convertedBox));
+////                                NSLog(@"face roll: %@", observation.roll);
+////                                NSLog(@"face yaw: %@", observation.yaw);
+////                                NSLog(@"face pitch: %@", observation.pitch);
+////                                NSLog(@"face quality: %@", observation.faceCaptureQuality);
+////            } else {
+////                NSLog(@"Tracking lost for a face.");
+////            }
+//        }
     
         NSLog(@"Face detection process ended");
 
     
-        CVPixelBufferRelease(pixelBuffer2);
-        CFRelease(videoInfo);
-        CFRelease(sampleBuffer);
+//        CVPixelBufferRelease(pixelBuffer2);
+    CVPixelBufferRelease(pixelBuffer);
+//        CFRelease(videoInfo);
+//        CFRelease(sampleBuffer);
 }
 
 - (UIImageOrientation)
@@ -201,17 +297,17 @@
   switch (deviceOrientation) {
     case UIDeviceOrientationPortrait:
       return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationLeftMirrored
-                                                            : UIImageOrientationRight;
+                                                            : UIImageOrientationUp;
 
     case UIDeviceOrientationLandscapeLeft:
       return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationDownMirrored
-                                                            : UIImageOrientationUp;
+                                                            : UIImageOrientationRight;
     case UIDeviceOrientationPortraitUpsideDown:
       return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationRightMirrored
-                                                            : UIImageOrientationLeft;
+                                                            : UIImageOrientationDown;
     case UIDeviceOrientationLandscapeRight:
       return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationUpMirrored
-                                                            : UIImageOrientationDown;
+                                                            : UIImageOrientationLeft;
     case UIDeviceOrientationUnknown:
     case UIDeviceOrientationFaceUp:
     case UIDeviceOrientationFaceDown:

@@ -13,7 +13,7 @@
 
 
 extern void FaceDetection_InitializeFaceDetector_m11AAA01FE16BBA7EB971029263B163F6283F6BBA (void);
-extern void FaceDetection_DetectFaces_m58359FEA69BECBCCAC9C48ED6C65987B98C97BB8 (void);
+extern void FaceDetection_DetectFaces_m8A390847B43B2B388C3934A33D01C42D6B53A2BA (void);
 extern void FaceDetection_get_ppImageWidth_mD673CFFA3A4337294A8B6EDDDEC0C09716D35CC6 (void);
 extern void FaceDetection_set_ppImageWidth_m64ECAC65E592CCFB39B3E4CF4562AC5816F6D152 (void);
 extern void FaceDetection_get_ppImageHeight_mFA651527ADAAF12D838351304A65EEC258CE559E (void);
@@ -36,7 +36,7 @@ extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA1
 static Il2CppMethodPointer s_methodPointers[21] = 
 {
 	FaceDetection_InitializeFaceDetector_m11AAA01FE16BBA7EB971029263B163F6283F6BBA,
-	FaceDetection_DetectFaces_m58359FEA69BECBCCAC9C48ED6C65987B98C97BB8,
+	FaceDetection_DetectFaces_m8A390847B43B2B388C3934A33D01C42D6B53A2BA,
 	FaceDetection_get_ppImageWidth_mD673CFFA3A4337294A8B6EDDDEC0C09716D35CC6,
 	FaceDetection_set_ppImageWidth_m64ECAC65E592CCFB39B3E4CF4562AC5816F6D152,
 	FaceDetection_get_ppImageHeight_mFA651527ADAAF12D838351304A65EEC258CE559E,
@@ -60,7 +60,7 @@ static Il2CppMethodPointer s_methodPointers[21] =
 static const int32_t s_InvokerIndices[21] = 
 {
 	14905,
-	11320,
+	10109,
 	9011,
 	7215,
 	9011,
