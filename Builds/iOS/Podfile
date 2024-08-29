@@ -27,6 +27,6 @@ target 'UnityFramework' do
   use_frameworks!
 
   # Pods for UnityFramework
-  pod 'GoogleMLKit/FaceDetection'
+  pod 'GoogleMLKit/FaceDetection', '6.0.0'
 
 end
