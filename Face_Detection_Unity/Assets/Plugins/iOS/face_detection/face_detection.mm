@@ -73,6 +73,8 @@
 
     CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
 
+    CVPixelBufferRelease(pixelBuffer); // Release Pixel Buffer
+
     ciImage = [ciImage imageByCroppingToRect:cropRect];
 
     CGFloat scale = 1080 / ciImage.extent.size.width;
@@ -86,7 +88,7 @@
     CGImageRef cgImage = [ciContext createCGImage:ciImage fromRect:[ciImage extent]];
     if (cgImage) {
         uiImage = [UIImage imageWithCGImage:cgImage];
-        CGImageRelease(cgImage); // Don't forget to release the CGImageRef
+        CGImageRelease(cgImage);
     }
     
     MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:uiImage];
@@ -114,18 +116,18 @@
                 NSLog(@"Face detected at %@", NSStringFromCGRect(frame));
             }
 
-//            NSError *jsonSerializationError;
-//        
-//            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&jsonSerializationError];
-//        
-//            if (jsonSerializationError) {
-//                NSLog(@"Error serializing JSON: %@", jsonSerializationError);
-//                return;
-//            }
+            NSError *jsonSerializationError;
         
-//            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&jsonSerializationError];
         
-//            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
+            if (jsonSerializationError) {
+                NSLog(@"Error serializing JSON: %@", jsonSerializationError);
+                return;
+            }
+        
+            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
 
 
@@ -153,8 +155,6 @@
 //    }
 //    
 //    NSLog(@"Face detection process ended");
-    
-    CVPixelBufferRelease(pixelBuffer);
 }
 
 - (UIImageOrientation)
