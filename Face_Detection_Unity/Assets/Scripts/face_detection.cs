@@ -17,7 +17,7 @@ public class FaceDetection : MonoBehaviour
     private static extern void InitializeFaceDetector();
 
     [DllImport("__Internal")]
-    private static extern void DetectFaces(IntPtr imgBytes, int width, int height, int screenWidth, int screenHeight, double timestamp);
+    private static extern void DetectFaces(IntPtr imgBytes, int width, int height, double timestamp);
 
     private bool isLoading = false;
 
@@ -183,7 +183,7 @@ public class FaceDetection : MonoBehaviour
             // Log a portion of the image data for verification
             // byte[] imageData = buffer.ToArray();
             // Debug.Log($"Image data (Unity): {BitConverter.ToString(imageData, 0, Math.Min(imageData.Length, 100))}");
-                    DetectFaces((IntPtr)ptr, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y, Screen.width, Screen.height, timestamp);
+                    DetectFaces((IntPtr)ptr, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y, timestamp);
                 }
                 finally
                 {
@@ -211,30 +211,4 @@ public class FaceDetection : MonoBehaviour
             Debug.Log($"FPS 2: {processedFps}");
         }
     }
-
-    private void SaveImage(NativeArray<byte> imageData, int width, int height) {
-    Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
-    tex.LoadRawTextureData(imageData);
-    tex.Apply();
-
-    byte[] pngData = tex.EncodeToPNG();
-    string filename = $"UnityFrame_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
-    System.IO.File.WriteAllBytes(Application.persistentDataPath + "/" + filename, pngData);
-    Debug.Log($"Saved image: {Application.persistentDataPath}/{filename}");
-
-    Destroy(tex);
-}
-    private void SaveImage2(NativeArray<byte> imageData, int width, int height) {
-    Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
-    tex.LoadRawTextureData(imageData);
-    tex.Apply();
-
-    byte[] pngData = tex.EncodeToPNG();
-    string filename = $"UnityFrame2_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
-    System.IO.File.WriteAllBytes(Application.persistentDataPath + "/" + filename, pngData);
-    Debug.Log($"Saved image 2: {Application.persistentDataPath}/{filename}");
-
-    Destroy(tex);
-}
-
 }
