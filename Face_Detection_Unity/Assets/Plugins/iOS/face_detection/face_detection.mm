@@ -95,8 +95,6 @@
       [self imageOrientationFromDeviceOrientation:UIDevice.currentDevice.orientation
                                    cameraPosition:AVCaptureDevicePositionBack];
     
-    NSLog(@"Starting face detection");
-    
     [faceDetector processImage:visionImage
                     completion:^(NSArray<MLKFace *> *faces,
                                  NSError *error) {
@@ -113,9 +111,7 @@
                 
                 CGRect frame = face.frame;
                 
-                // UnitySendMessage("Drawer", "RecieveMessage", );
                 NSLog(@"Face detected at %@", NSStringFromCGRect(frame));
-//                NSLog(@"Face detected at %@ at time %f", NSStringFromCGRect(frame), CMTimeGetSeconds(presentationTime));
             }
 
 //            NSError *jsonSerializationError;
@@ -131,53 +127,33 @@
         
 //            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
+
+
+//    Uncomment code below to try face detction using the apple vision framework but with no tracking
     
-//
 //    VNDetectFaceRectanglesRequest *faceDetectionRequest = [[VNDetectFaceRectanglesRequest alloc] initWithCompletionHandler:^(VNRequest *request, NSError * _Nullable error) {
 //            if (error) {
 //                NSLog(@"Face detection error: %@", error.localizedDescription);
 //                return;
 //            }
-//        
-////            NSArray<VNFaceObservation *> *faceObservations = request.results;
-//        
+//                
 //            NSLog(@"Detected faces: %lu", (unsigned long)request.results.count);
 //
-////            [self.trackingRequests removeAllObjects];
 //            for (VNFaceObservation *observation in request.results) {
-////                VNTrackObjectRequest *trackingRequest = [[VNTrackObjectRequest alloc] initWithDetectedObjectObservation:observation];
-////                trackingRequest.trackingLevel = VNRequestTrackingLevelFast;
-////                [self.trackingRequests addObject:trackingRequest];
-//                CGRect boundingBox = observation.boundingBox;
-//
-//                // Convert normalized bounding box to image coordinates
-//                CGFloat imageWidth = ciImage.extent.size.width;
-//                CGFloat imageHeight = ciImage.extent.size.height;
-//                CGRect convertedBox = CGRectMake(boundingBox.origin.x * imageWidth,
-//                                                 (1 - boundingBox.origin.y - boundingBox.size.height) * imageHeight,
-//                                                 boundingBox.size.width * imageWidth,
-//                                                 boundingBox.size.height * imageHeight);
-//
-//                NSLog(@"Detected face at: %@", NSStringFromCGRect(convertedBox));
-////                NSLog(@"face roll: %@", observation.roll);
-////                NSLog(@"face yaw: %@", observation.yaw);
-////                NSLog(@"face pitch: %@", observation.pitch);
-////                NSLog(@"face quality: %@", observation.faceCaptureQuality);
+//                // Process resutls
 //            }
-//        }];
+//    }];
 //    
-////        [requests addObject:faceDetectionRequest];
+//    VNImageRequestHandler *handler = [[VNImageRequestHandler alloc] initWithCIImage:ciImage options:@{}];
+//    NSError *error = nil;
+//    [handler performRequests:@[faceDetectionRequest] error:&error];
 //
-//        VNImageRequestHandler *handler = [[VNImageRequestHandler alloc] initWithCIImage:ciImage options:@{}];
-//        NSError *error = nil;
-//        [handler performRequests:@[faceDetectionRequest] error:&error];
-//
-//        if (error) {
-//            NSLog(@"Error performing vision request: %@", error.localizedDescription);
-//        }
+//    if (error) {
+//        NSLog(@"Error performing vision request: %@", error.localizedDescription);
+//    }
+//    
+//    NSLog(@"Face detection process ended");
     
-    NSLog(@"Face detection process ended");
-
     CVPixelBufferRelease(pixelBuffer);
 }
 

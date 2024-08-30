@@ -5,13 +5,11 @@ using System.Runtime.InteropServices;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using System;
-using UnityEngine.XR.ARKit;
 
 public class FaceDetection : MonoBehaviour
 {
     private ARCameraManager cameraManager;
     private Texture2D cameraTexture;
-    // public ARSession arSession;
 
     [DllImport("__Internal")]
     private static extern void InitializeFaceDetector();
@@ -94,71 +92,11 @@ public class FaceDetection : MonoBehaviour
         {
             using (image)
             {
-                // DeviceOrientation orientation = Input.deviceOrientation;
-
                 UnityEngine.Debug.Log($"AR Camera Resolution: {image.width}x{image.height}");
-
-                // float displayAspect = (float)Screen.width / Screen.height;
-                // float imageAspect = (float)image.width / image.height;
-
-                // int croppedWidth, croppedHeight;
-                // int xOffset = 0, yOffset = 0;
-                // int outWidth, outHeight;
-
-
-                // var conversionParams0 = new XRCpuImage.ConversionParams
-                // {
-                //     inputRect = new RectInt(0, 0, image.width, image.height),
-                //     outputDimensions = new Vector2Int(image.width, image.height),
-                //     outputFormat = TextureFormat.RGBA32,
-                //     transformation = XRCpuImage.Transformation.None
-                // };
-                //
-                // int size0 = image.GetConvertedDataSize(conversionParams0);
-                // var buffer0 = new NativeArray<byte>(size0, Allocator.Temp);
-                //
-                // image.Convert(conversionParams0, new IntPtr(buffer0.GetUnsafePtr()), buffer0.Length);
-                // 
-                // SaveImage2(buffer0, image.width, image.height);
-
-                // if (displayAspect > imageAspect)
-                // {
-                //     croppedWidth = image.width;
-                //     croppedHeight = Mathf.RoundToInt(croppedWidth / displayAspect);
-                //     yOffset = (image.height - croppedHeight) / 2;
-                //     if (croppedWidth > 1080) {
-                //         outWidth = 1080;
-                //         outHeight = Mathf.RoundToInt((float)outWidth / croppedWidth * croppedHeight);
-                //     } else {
-                //         outWidth = croppedWidth;
-                //         outHeight = croppedHeight;
-                //     }
-                // }
-                // else
-                // {
-                //     croppedHeight = image.height;
-                //     croppedWidth = Mathf.RoundToInt(croppedHeight * displayAspect);
-                //     xOffset = (image.width - croppedWidth) / 2;
-                //     if (croppedHeight > 1080) {
-                //         outHeight = 1080;
-                //         outWidth = Mathf.RoundToInt((float)outHeight / croppedHeight * croppedWidth);
-                //     } else {
-                //         outHeight = croppedHeight;
-                //         outWidth = croppedWidth;
-                //     }
-                //
-                // }
-                //
-                // if (!ppImageHeight.HasValue || !ppImageHeight.HasValue) {
-                //     ppImageWidth = outWidth;
-                //     ppImageHeight = outHeight;
-                // }
 
                 var conversionParams = new XRCpuImage.ConversionParams
                 {
                     inputRect = new RectInt(0, 0, image.width, image.height),
-                    // inputRect = new RectInt(xOffset, yOffset, croppedWidth, croppedHeight),
-                    // outputDimensions = new Vector2Int(outWidth, outHeight),
                     outputDimensions = new Vector2Int(image.width, image.height),
                     outputFormat = TextureFormat.BGRA32,
                     transformation = XRCpuImage.Transformation.None
@@ -167,22 +105,11 @@ public class FaceDetection : MonoBehaviour
                 int size = image.GetConvertedDataSize(conversionParams);
                 var buffer = new NativeArray<byte>(size, Allocator.Temp);
 
-                // Debug.Log($"AR Camera Resolution 2: {croppedWidth}x{croppedHeight}");
-                // Debug.Log($"AR Camera Resolution 3: {outWidth}x{outHeight}");
-
                 try
                 {
                     image.Convert(conversionParams, new IntPtr(buffer.GetUnsafePtr()), buffer.Length);
                     void* ptr = NativeArrayUnsafeUtility.GetUnsafePtr(buffer);
                     double timestamp = (double)image.timestamp;
-                    // SaveImage(buffer, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y);
-                    // Log bytes per row
-            // int bytesPerRow = image.width * 4;
-            // Debug.Log($"Bytes per row (Unity): {bytesPerRow}");
-
-            // Log a portion of the image data for verification
-            // byte[] imageData = buffer.ToArray();
-            // Debug.Log($"Image data (Unity): {BitConverter.ToString(imageData, 0, Math.Min(imageData.Length, 100))}");
                     DetectFaces((IntPtr)ptr, conversionParams.outputDimensions.x, conversionParams.outputDimensions.y, timestamp);
                 }
                 finally
