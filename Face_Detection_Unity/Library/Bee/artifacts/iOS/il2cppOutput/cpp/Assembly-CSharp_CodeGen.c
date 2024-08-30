@@ -27,11 +27,13 @@ extern void FaceDetection__ctor_mA35FD63492C93FC2FB6F6FCD442D205A9B46F745 (void)
 extern void FaceThingRenderer_ReceiveMessage_mD585CC06FAC48D636DD2A421F721CEB8EBFCCFDE (void);
 extern void FaceThingRenderer_UpdateOrCreateCube_m666DDC8B196B95AB769D594A452F642378F86090 (void);
 extern void FaceThingRenderer__ctor_mAFC85FD08D3B9BD540E59BE4F467572F12D3124F (void);
+extern void FrameRegulator_Start_m7C45381D9AEEE49E73CFE116587D9FFE802AB683 (void);
+extern void FrameRegulator__ctor_m4FF0463077900DA4919A052961D61017B68E3386 (void);
 extern void Readme__ctor_m69C325C4C171DCB0312B646A9034AA91EA8C39C6 (void);
 extern void Section__ctor_m5F732533E4DFC0167D965E5F5DB332E46055399B (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033 (void);
 extern void UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1 (void);
-static Il2CppMethodPointer s_methodPointers[19] = 
+static Il2CppMethodPointer s_methodPointers[21] = 
 {
 	FaceDetection_InitializeFaceDetector_m11AAA01FE16BBA7EB971029263B163F6283F6BBA,
 	FaceDetection_DetectFaces_m58359FEA69BECBCCAC9C48ED6C65987B98C97BB8,
@@ -48,12 +50,14 @@ static Il2CppMethodPointer s_methodPointers[19] =
 	FaceThingRenderer_ReceiveMessage_mD585CC06FAC48D636DD2A421F721CEB8EBFCCFDE,
 	FaceThingRenderer_UpdateOrCreateCube_m666DDC8B196B95AB769D594A452F642378F86090,
 	FaceThingRenderer__ctor_mAFC85FD08D3B9BD540E59BE4F467572F12D3124F,
+	FrameRegulator_Start_m7C45381D9AEEE49E73CFE116587D9FFE802AB683,
+	FrameRegulator__ctor_m4FF0463077900DA4919A052961D61017B68E3386,
 	Readme__ctor_m69C325C4C171DCB0312B646A9034AA91EA8C39C6,
 	Section__ctor_m5F732533E4DFC0167D965E5F5DB332E46055399B,
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1_Get_mBEB95BEB954BB63E9710BBC7AD5E78C4CB0A0033,
 	UnitySourceGeneratedAssemblyMonoScriptTypes_v1__ctor_mE70FB23ACC1EA12ABC948AA22C2E78B2D0AA39B1,
 };
-static const int32_t s_InvokerIndices[19] = 
+static const int32_t s_InvokerIndices[21] = 
 {
 	14904,
 	11319,
@@ -72,6 +76,8 @@ static const int32_t s_InvokerIndices[19] =
 	9550,
 	9550,
 	9550,
+	9550,
+	9550,
 	14930,
 	9550,
 };
@@ -79,7 +85,7 @@ IL2CPP_EXTERN_C const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule;
 const Il2CppCodeGenModule g_AssemblyU2DCSharp_CodeGenModule = 
 {
 	"Assembly-CSharp.dll",
-	19,
+	21,
 	s_methodPointers,
 	0,
 	NULL,

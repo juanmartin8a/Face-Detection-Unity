@@ -398,6 +398,7 @@
 "Assets/Scripts/face_detection.cs"
 "Assets/Scripts/face_thing_renderer.cs"
 "Assets/Scripts/face_utils.cs"
+"Assets/Scripts/frame_regulator.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 /unsafe+

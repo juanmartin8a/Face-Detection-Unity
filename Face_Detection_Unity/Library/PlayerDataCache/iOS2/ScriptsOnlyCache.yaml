@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - FaceDetection
     - FaceThingRenderer
+    - FrameRegulator
     Unity.InputSystem.dll:
     - UnityEngine.InputSystem.InputSettings
     - UnityEngine.InputSystem.InputSystemObject
@@ -211,19 +212,19 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 16894}
+      Script: {instanceID: 16854}
     - Class: 114
-      Script: {instanceID: 16934}
+      Script: {instanceID: 16896}
     - Class: 114
-      Script: {instanceID: 17022}
+      Script: {instanceID: 16936}
     - Class: 114
-      Script: {instanceID: 17058}
+      Script: {instanceID: 17024}
     - Class: 114
-      Script: {instanceID: 17414}
+      Script: {instanceID: 17060}
     - Class: 114
-      Script: {instanceID: 17636}
+      Script: {instanceID: 17416}
     - Class: 114
-      Script: {instanceID: 17812}
+      Script: {instanceID: 17638}
     - Class: 114
       Script: {instanceID: 18028}
     - Class: 114
@@ -322,6 +323,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 28110}
     - Class: 114
       Script: {instanceID: 28594}
+    - Class: 114
+      Script: {instanceID: 28848}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -345,6 +348,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime
     namespaceName: UnityEngine.Rendering.Universal
     className: UniversalRenderPipelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 737e9b290aa1427bee6a10546f4434bd
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FrameRegulator
   - hash:
       serializedVersion: 2
       Hash: ed2c59b75f8f3cd8df4cd4387d965e71
@@ -477,12 +486,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Universal.Runtime
     namespaceName: UnityEngine.Rendering.Universal
     className: XRSystemData
-  - hash:
-      serializedVersion: 2
-      Hash: 6573f9eac24a5a8cd9cae10d939d9a9d
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: FaceDetection
   - hash:
       serializedVersion: 2
       Hash: 1321993db8249e1e05e1e0492b2bbdc3
@@ -2265,6 +2268,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 6573f9eac24a5a8cd9cae10d939d9a9d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FaceDetection
   platform: 9
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
