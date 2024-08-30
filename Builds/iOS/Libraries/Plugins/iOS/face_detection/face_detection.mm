@@ -95,8 +95,6 @@
       [self imageOrientationFromDeviceOrientation:UIDevice.currentDevice.orientation
                                    cameraPosition:AVCaptureDevicePositionBack];
     
-    NSLog(@"Starting face detection");
-    
     [faceDetector processImage:visionImage
                     completion:^(NSArray<MLKFace *> *faces,
                                  NSError *error) {
@@ -113,9 +111,7 @@
                 
                 CGRect frame = face.frame;
                 
-                // UnitySendMessage("Drawer", "RecieveMessage", );
                 NSLog(@"Face detected at %@", NSStringFromCGRect(frame));
-//                NSLog(@"Face detected at %@ at time %f", NSStringFromCGRect(frame), CMTimeGetSeconds(presentationTime));
             }
 
 //            NSError *jsonSerializationError;
@@ -131,6 +127,9 @@
         
 //            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
+
+
+//    Uncomment code below to try face detction using the apple vision framework but with no tracking
     
 //    VNDetectFaceRectanglesRequest *faceDetectionRequest = [[VNDetectFaceRectanglesRequest alloc] initWithCompletionHandler:^(VNRequest *request, NSError * _Nullable error) {
 //            if (error) {
@@ -154,7 +153,7 @@
 //    }
 //    
 //    NSLog(@"Face detection process ended");
-
+    
     CVPixelBufferRelease(pixelBuffer);
 }
 
@@ -202,5 +201,6 @@ extern "C" {
     }
 
 }
+
 
 
