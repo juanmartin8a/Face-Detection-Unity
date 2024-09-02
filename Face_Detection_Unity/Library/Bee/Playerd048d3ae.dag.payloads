@@ -615,9 +615,6 @@ Payload for "WriteText /Users/juanma/development/unity/Face-Detection-Unity/Buil
     <key>UISupportedInterfaceOrientations</key>
     <array>
       <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationPortraitUpsideDown</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <true />

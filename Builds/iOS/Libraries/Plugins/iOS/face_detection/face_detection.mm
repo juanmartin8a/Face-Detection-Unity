@@ -18,6 +18,9 @@
 - (instancetype)initPrivate {
     self = [super init];
     if (self) {
+        _motionManager = [[CMMotionManager alloc] init];
+        _currentOrientation = UIDeviceOrientationPortrait;
+        [self startContinuousOrientationUpdates];
         ciContext = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer: @(NO)}];
         [self initializeFaceDetector];
     }
@@ -94,8 +97,7 @@
     MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:uiImage];
     
     visionImage.orientation =
-      [self imageOrientationFromDeviceOrientation:UIDevice.currentDevice.orientation
-                                   cameraPosition:AVCaptureDevicePositionBack];
+      [self imageOrientationFromDeviceOrientation:self.currentOrientation cameraPosition:AVCaptureDevicePositionBack];
     
     [faceDetector processImage:visionImage
                     completion:^(NSArray<MLKFace *> *faces,
@@ -129,63 +131,51 @@
         
             UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
-
-
-//    Uncomment code below to try face detction using the apple vision framework but with no tracking
-    
-//    VNDetectFaceRectanglesRequest *faceDetectionRequest = [[VNDetectFaceRectanglesRequest alloc] initWithCompletionHandler:^(VNRequest *request, NSError * _Nullable error) {
-//            if (error) {
-//                NSLog(@"Face detection error: %@", error.localizedDescription);
-//                return;
-//            }
-//                
-//            NSLog(@"Detected faces: %lu", (unsigned long)request.results.count);
-//
-//            for (VNFaceObservation *observation in request.results) {
-//                // Process resutls
-//            }
-//    }];
-//    
-//    VNImageRequestHandler *handler = [[VNImageRequestHandler alloc] initWithCIImage:ciImage options:@{}];
-//    NSError *error = nil;
-//    [handler performRequests:@[faceDetectionRequest] error:&error];
-//
-//    if (error) {
-//        NSLog(@"Error performing vision request: %@", error.localizedDescription);
-//    }
-//    
-//    NSLog(@"Face detection process ended");
 }
 
-- (UIImageOrientation)
-  imageOrientationFromDeviceOrientation:(UIDeviceOrientation)deviceOrientation
-                         cameraPosition:(AVCaptureDevicePosition)cameraPosition {
-  switch (deviceOrientation) {
-    case UIDeviceOrientationPortrait:
-        NSLog(@"Portrait orientation");
-      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationLeftMirrored
-                                                            : UIImageOrientationUp;
+- (void)startContinuousOrientationUpdates {
+    if (self.motionManager.isAccelerometerAvailable) {
+        self.motionManager.accelerometerUpdateInterval = 1.0 / 10.0;
+        
+        __weak __typeof__(self) weakSelf = self;
+        [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue]
+                                                withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+            if (error) {
+                NSLog(@"Error: %@", error);
+                return;
+            }
+            
+            [weakSelf updateDeviceOrientationWithAccelerometerData:accelerometerData];
+        }];
+    } else {
+        NSLog(@"Accelerometer is not available.");
+    }
+}
 
-    case UIDeviceOrientationLandscapeLeft:
-          NSLog(@"ll orientation");
-      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationDownMirrored
-                                                            : UIImageOrientationRight;
-    case UIDeviceOrientationPortraitUpsideDown:
-          NSLog(@"ud orientation");
-      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationRightMirrored
-                                                            : UIImageOrientationDown;
-    case UIDeviceOrientationLandscapeRight:
-          NSLog(@"lr orientation");
-      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationUpMirrored
-                                                            : UIImageOrientationLeft;
-    case UIDeviceOrientationUnknown:
-          NSLog(@"u orientation");
-    case UIDeviceOrientationFaceUp:
-          NSLog(@"fu orientation");
-    case UIDeviceOrientationFaceDown:
-          NSLog(@"fd orientation");
-      return UIImageOrientationUp;
-  }
+- (void)updateDeviceOrientationWithAccelerometerData:(CMAccelerometerData *)accelerometerData {
+    CMAcceleration acceleration = accelerometerData.acceleration;
+    UIDeviceOrientation newOrientation = self.currentOrientation;
+
+    if (acceleration.x >= 0.75) {
+        newOrientation = UIDeviceOrientationLandscapeLeft;
+    } else if (acceleration.x <= -0.75) {
+        newOrientation = UIDeviceOrientationLandscapeRight;
+    } else if (acceleration.y <= -0.75) {
+        newOrientation = UIDeviceOrientationPortrait;
+    } else if (acceleration.y >= 0.75) {
+        newOrientation = UIDeviceOrientationPortraitUpsideDown;
+    } else {
+        newOrientation = UIDeviceOrientationPortrait; // Flat or undetermined
+    }
+    
+    if (newOrientation != self.currentOrientation) {
+        _currentOrientation = newOrientation;
+        NSLog(@"Updated Orientation: %ld", (long)self.currentOrientation);
+    }
+}
+
+- (void)stopContinuousOrientationUpdates {
+    [self.motionManager stopAccelerometerUpdates];
 }
 
 @end
@@ -195,12 +185,8 @@ extern "C" {
         [[FaceDetection sharedInstance] initializeFaceDetector];
     }
 
-
     void DetectFaces(const void* imageBytes, int width, int height, double timestamp) {
         [[FaceDetection sharedInstance] detectFaces:imageBytes width:width height:height timestamp:timestamp];
     }
 
 }
-
-
-
