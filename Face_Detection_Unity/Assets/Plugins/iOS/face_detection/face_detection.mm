@@ -133,6 +133,26 @@
         }];
 }
 
+- (UIImageOrientation)
+  imageOrientationFromDeviceOrientation:(UIDeviceOrientation)deviceOrientation
+                         cameraPosition:(AVCaptureDevicePosition)cameraPosition {
+  switch (deviceOrientation) {
+    case UIDeviceOrientationPortrait:
+      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationLeftMirrored
+                                                            : UIImageOrientationPortrait;
+    case UIDeviceOrientationLandscapeLeft:
+      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationDownMirrored
+                                                            : UIImageOrientationRight;
+    case UIDeviceOrientationPortraitUpsideDown:
+      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationRightMirrored
+                                                            : UIImageOrientationDown;
+    case UIDeviceOrientationLandscapeRight:
+      return cameraPosition == AVCaptureDevicePositionFront ? UIImageOrientationUpMirrored
+                                                            : UIImageOrientationLeft;
+      return UIImageOrientationUp;
+  }
+}
+
 - (void)startContinuousOrientationUpdates {
     if (self.motionManager.isAccelerometerAvailable) {
         self.motionManager.accelerometerUpdateInterval = 1.0 / 10.0;

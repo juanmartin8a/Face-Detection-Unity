@@ -3354,10 +3354,6 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Renderer_set_enabled();
 		Register_UnityEngine_Renderer_set_enabled();
 
-		//UnityEngine.Material UnityEngine.Renderer::GetMaterial()
-		void Register_UnityEngine_Renderer_GetMaterial();
-		Register_UnityEngine_Renderer_GetMaterial();
-
 		//UnityEngine.Material UnityEngine.Renderer::GetSharedMaterial()
 		void Register_UnityEngine_Renderer_GetSharedMaterial();
 		Register_UnityEngine_Renderer_GetSharedMaterial();

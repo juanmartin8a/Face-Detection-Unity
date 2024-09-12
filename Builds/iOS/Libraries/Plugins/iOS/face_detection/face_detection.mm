@@ -29,7 +29,8 @@
 
 - (void)initializeFaceDetector {
     MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
-    options.performanceMode = MLKFaceDetectorPerformanceModeAccurate;
+    options.performanceMode = MLKFaceDetectorPerformanceModeFast;
+    options.trackingEnabled = true;
     options.contourMode = MLKFaceDetectorContourModeNone;
     options.landmarkMode = MLKFaceDetectorLandmarkModeNone;
     options.classificationMode = MLKFaceDetectorClassificationModeNone;
@@ -96,8 +97,7 @@
     
     MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:uiImage];
     
-    visionImage.orientation =
-      [self imageOrientationFromDeviceOrientation:self.currentOrientation cameraPosition:AVCaptureDevicePositionBack];
+    visionImage.orientation = [self imageOrientationFromDeviceOrientation];
     
     [faceDetector processImage:visionImage
                     completion:^(NSArray<MLKFace *> *faces,
@@ -131,6 +131,21 @@
         
             UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
+}
+
+- (UIImageOrientation)imageOrientationFromDeviceOrientation {
+  switch (self.currentOrientation) {
+    case UIDeviceOrientationPortrait:
+      return UIImageOrientationUp;
+    case UIDeviceOrientationLandscapeLeft:
+      return UIImageOrientationRight;
+    case UIDeviceOrientationPortraitUpsideDown:
+      return UIImageOrientationDown;
+    case UIDeviceOrientationLandscapeRight:
+      return UIImageOrientationLeft;
+    default:
+          return UIImageOrientationUp;
+  }
 }
 
 - (void)startContinuousOrientationUpdates {
@@ -190,3 +205,4 @@ extern "C" {
     }
 
 }
+
