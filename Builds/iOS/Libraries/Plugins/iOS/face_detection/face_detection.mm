@@ -98,17 +98,35 @@
     MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:uiImage];
     
     visionImage.orientation = [self imageOrientationFromDeviceOrientation];
-    
+        
     [faceDetector processImage:visionImage
                     completion:^(NSArray<MLKFace *> *faces,
                                  NSError *error) {
+            NSMutableArray *faceDictionaries = [NSMutableArray array];
             if (error != nil) {
                 NSLog(@"Face detection error: %@", error.localizedDescription);
+                NSDictionary *jsonDict = @{
+                    @"imageHeight": @(uiImage.size.height),
+                    @"imageWidth": @(uiImage.size.width),
+                    @"faces": faceDictionaries
+                };
+
+                NSError *jsonSerializationError;
+
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonSerializationError];
+
+                if (jsonSerializationError) {
+                    NSLog(@"Error serializing JSON: %@", jsonSerializationError);
+                    return;
+                }
+
+                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+                UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
                 return;
             }
         
             NSLog(@"Face detection completed. Found %lu faces", faces.count);
-            NSMutableArray *faceDictionaries = [NSMutableArray arrayWithCapacity:faces.count];
 
             for (MLKFace *face in faces) {
                 [faceDictionaries addObject:[FaceDetectionUtils dictionaryFromMLKFace:face]];
@@ -117,19 +135,25 @@
                 
                 NSLog(@"Face detected at %@", NSStringFromCGRect(frame));
             }
+        
+        NSDictionary *jsonDict = @{
+            @"imageHeight": @(uiImage.size.height),
+            @"imageWidth": @(uiImage.size.width),
+            @"faces": faceDictionaries
+        };
 
-            NSError *jsonSerializationError;
-        
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:faceDictionaries options:0 error:&jsonSerializationError];
-        
-            if (jsonSerializationError) {
-                NSLog(@"Error serializing JSON: %@", jsonSerializationError);
-                return;
-            }
-        
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
-            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
+        NSError *jsonSerializationError;
+
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonSerializationError];
+
+        if (jsonSerializationError) {
+            NSLog(@"Error serializing JSON: %@", jsonSerializationError);
+            return;
+        }
+
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+        UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
         }];
 }
 
@@ -143,8 +167,9 @@
       return UIImageOrientationDown;
     case UIDeviceOrientationLandscapeRight:
       return UIImageOrientationLeft;
+          
     default:
-          return UIImageOrientationUp;
+      return UIImageOrientationUp;
   }
 }
 
@@ -205,4 +230,3 @@ extern "C" {
     }
 
 }
-

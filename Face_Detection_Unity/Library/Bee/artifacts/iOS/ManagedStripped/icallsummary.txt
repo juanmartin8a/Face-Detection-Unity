@@ -108,6 +108,7 @@ UnityEngine.Camera::ScreenToViewportPoint_Injected
 UnityEngine.Camera::SetStereoProjectionMatrix_Injected
 UnityEngine.Camera::SetStereoViewMatrix_Injected
 UnityEngine.Camera::SetupCurrent
+UnityEngine.Camera::ViewportToWorldPoint_Injected
 UnityEngine.Camera::WorldToScreenPoint_Injected
 UnityEngine.Camera::get_backgroundColor_Injected
 UnityEngine.Camera::get_cameraToWorldMatrix_Injected
@@ -237,6 +238,7 @@ UnityEngine.Cursor::SetCursor_Injected
 UnityEngine.Cursor::get_lockState
 UnityEngine.Debug::get_isDebugBuild
 UnityEngine.Debug::ExtractStackTraceNoAlloc
+UnityEngine.Debug::DrawLine_Injected
 UnityEngine.DebugLogHandler::Internal_Log
 UnityEngine.DebugLogHandler::Internal_LogException
 UnityEngine.Display::RequiresSrgbBlitToBackbufferImpl
@@ -743,6 +745,7 @@ UnityEngine.Renderer::SetMaterial
 UnityEngine.Renderer::SetMaterialArray
 UnityEngine.Renderer::get_bounds_Injected
 UnityEngine.Renderer::set_enabled
+UnityEngine.Renderer::GetMaterial
 UnityEngine.Renderer::GetSharedMaterial
 UnityEngine.Renderer::GetSharedMaterialArray
 UnityEngine.Rendering.AsyncGPUReadback::Request_Internal_GraphicsBuffer_1_Injected

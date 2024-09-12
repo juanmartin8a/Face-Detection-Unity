@@ -26064,7 +26064,7 @@ IL_00fe:
 		Stream_tF844051B786E8F7F4244DBD218D74E8617B9A2DE* L_43 = ___0_stream;
 		NullCheck(L_43);
 		int64_t L_44;
-		L_44 = VirtualFuncInvoker0< int64_t >::Invoke(11, L_43);
+		L_44 = VirtualFuncInvoker0< int64_t >::Invoke(12, L_43);
 		V_2 = L_44;
 		DeviceInfoU5BU5D_t83A513EC4EB7BD3AA21A9352117520BC63C34E1A* L_45 = __this->___m_DeviceInfos;
 		int32_t L_46;
@@ -26153,7 +26153,7 @@ IL_0187:
 		Stream_tF844051B786E8F7F4244DBD218D74E8617B9A2DE* L_73 = ___0_stream;
 		NullCheck(L_73);
 		int64_t L_74;
-		L_74 = VirtualFuncInvoker0< int64_t >::Invoke(11, L_73);
+		L_74 = VirtualFuncInvoker0< int64_t >::Invoke(12, L_73);
 		int64_t L_75 = V_2;
 		V_4 = ((int64_t)il2cpp_codegen_subtract(L_74, L_75));
 		BinaryWriter_tFB94D67EDFA3F6A34744A163BDABE287FDF2ED1E* L_76 = V_0;
@@ -31989,7 +31989,7 @@ CATCH_002f:
 		L_13 = Exception_GetType_mAD1230385BDC06119C339187CC37F22B6A79CF09(L_12, NULL);
 		NullCheck(L_13);
 		String_t* L_14;
-		L_14 = VirtualFuncInvoker0< String_t* >::Invoke(7, L_13);
+		L_14 = VirtualFuncInvoker0< String_t* >::Invoke(8, L_13);
 		int32_t L_15 = ___0_updateType;
 		int32_t L_16 = L_15;
 		RuntimeObject* L_17 = Box(((RuntimeClass*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&NativeInputUpdateType_tBF672D1AE8F85E9FFC0D44EF6BD5FB96B5C9ACE8_il2cpp_TypeInfo_var)), &L_16);

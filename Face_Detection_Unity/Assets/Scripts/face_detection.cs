@@ -26,9 +26,6 @@ public class FaceDetection : MonoBehaviour
     private int processingFrameCount = 0;
     private float processedFps = 0.0f;
 
-    public int? ppImageWidth { get; private set; }
-    public int? ppImageHeight { get; private set; }
-
     void Awake()
     {
         cameraManager = GetComponent<ARCameraManager>();

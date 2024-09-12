@@ -1,4 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public struct FacesData {
+    public double imageHeight;
+    public double imageWidth;
+    public List<FaceData> faces;
+}
 
 [System.Serializable]
 public struct FaceData {
