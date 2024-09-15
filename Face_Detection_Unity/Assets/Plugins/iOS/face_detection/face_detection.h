@@ -4,6 +4,8 @@
 #import <UnityAppController.h>
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
+// Uncomment for apple vision
+// #import <Vision/Vision.h>
 
 @interface FaceDetection : NSObject
 
@@ -13,8 +15,5 @@
 + (instancetype)sharedInstance;
 - (void)initializeFaceDetector;
 - (void)detectFaces:(const void*)imageData width:(int)width height:(int)height timestamp:(double)timestamp;
-- (void)startContinuousOrientationUpdates;
-- (void)stopContinuousOrientationUpdates;
 
 @end
-

@@ -34,7 +34,7 @@
     options.contourMode = MLKFaceDetectorContourModeNone;
     options.landmarkMode = MLKFaceDetectorLandmarkModeNone;
     options.classificationMode = MLKFaceDetectorClassificationModeNone;
-    options.minFaceSize = 0.15;
+    options.minFaceSize = 0.2;
 
     faceDetector = [MLKFaceDetector faceDetectorWithOptions:options];
 }
@@ -77,7 +77,7 @@
 
     CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
 
-    CVPixelBufferRelease(pixelBuffer); // Release Pixel Buffer
+    CVPixelBufferRelease(pixelBuffer);
 
     ciImage = [ciImage imageByCroppingToRect:cropRect];
 
@@ -126,14 +126,10 @@
                 return;
             }
         
-            NSLog(@"Face detection completed. Found %lu faces", faces.count);
-
             for (MLKFace *face in faces) {
                 [faceDictionaries addObject:[FaceDetectionUtils dictionaryFromMLKFace:face]];
                 
                 CGRect frame = face.frame;
-                
-                NSLog(@"Face detected at %@", NSStringFromCGRect(frame));
             }
         
         NSDictionary *jsonDict = @{
@@ -154,8 +150,129 @@
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
         UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
-        }];
+    }];
+    
+    // Uncomment for apple vision method (no tracking)
+    
+//    CGImagePropertyOrientation orientation = [self cgImageOrientationFromDeviceOrientation];
+//    
+//    VNImageRequestHandler *imageRequestHandler = [[VNImageRequestHandler alloc] initWithCIImage:ciImage orientation:orientation options:@{}];
+//
+//    VNDetectFaceRectanglesRequest *faceDetectionRequest = [[VNDetectFaceRectanglesRequest alloc] initWithCompletionHandler:^(VNRequest *request, NSError * _Nullable error) {
+//
+//        NSMutableArray *faceDictionaries = [NSMutableArray array];
+//        if (error != nil) {
+//            NSLog(@"Face detection error: %@", error.localizedDescription);
+//
+//            NSDictionary *jsonDict = @{
+//                @"imageHeight": @(ciImage.extent.size.height),
+//                @"imageWidth": @(ciImage.extent.size.width),
+//                @"faces": faceDictionaries
+//            };
+//
+//            NSError *jsonSerializationError;
+//
+//            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonSerializationError];
+//
+//            if (jsonSerializationError) {
+//                NSLog(@"Error serializing JSON: %@", jsonSerializationError);
+//                return;
+//            }
+//
+//            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//
+//            UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
+//            return;
+//        }
+//
+//        NSArray<VNFaceObservation *> *observations = request.results;
+//
+//        NSLog(@"Face detection completed. Found %lu faces", (unsigned long)observations.count);
+//
+//        for (VNFaceObservation *observation in observations) {
+//
+//            CGRect faceRect = [self convertRectFromNormalizedCoordinates:observation.boundingBox imageSize:ciImage.extent.size];
+//
+//            NSLog(@"Face detected at %@", NSStringFromCGRect(faceRect));
+//
+//            NSDictionary *faceDict = [self dictionaryFromVNFaceObservation:observation imageSize:ciImage.extent.size];
+//
+//            [faceDictionaries addObject:faceDict];
+//        }
+//
+//        NSDictionary *jsonDict = @{
+//            @"imageHeight": @(ciImage.extent.size.height),
+//            @"imageWidth": @(ciImage.extent.size.width),
+//            @"faces": faceDictionaries
+//        };
+//
+//        NSError *jsonSerializationError;
+//
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonSerializationError];
+//
+//        if (jsonSerializationError) {
+//            NSLog(@"Error serializing JSON: %@", jsonSerializationError);
+//            return;
+//        }
+//
+//        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//
+//        UnitySendMessage("ar_face_manager", "ReceiveMessage", [jsonString UTF8String]);
+//    }];
+//
+//    NSError *performError = nil;
+//    BOOL success = [imageRequestHandler performRequests:@[faceDetectionRequest] error:&performError];
+//
+//    if (!success) {
+//        NSLog(@"Error performing face detection: %@", performError.localizedDescription);
+//    }
 }
+
+// Uncomment for apple vision method
+//- (CGImagePropertyOrientation)cgImageOrientationFromDeviceOrientation {
+//    switch (self.currentOrientation) {
+//        case UIDeviceOrientationPortrait:
+//            return kCGImagePropertyOrientationUp;
+//        case UIDeviceOrientationLandscapeLeft:
+//            return kCGImagePropertyOrientationRight;
+//        case UIDeviceOrientationPortraitUpsideDown:
+//            return kCGImagePropertyOrientationDown;
+//        case UIDeviceOrientationLandscapeRight:
+//            return kCGImagePropertyOrientationLeft;
+//        default:
+//            return kCGImagePropertyOrientationRight;
+//    }
+//}
+//
+// Uncomment for apple vision method
+//- (CGRect)convertRectFromNormalizedCoordinates:(CGRect)normalizedRect imageSize:(CGSize)imageSize {
+//    CGFloat x = normalizedRect.origin.x * imageSize.width;
+//    CGFloat y = (1 - normalizedRect.origin.y - normalizedRect.size.height) * imageSize.height;
+//    CGFloat width = normalizedRect.size.width * imageSize.width;
+//    CGFloat height = normalizedRect.size.height * imageSize.height;
+//    return CGRectMake(x, y, width, height);
+//}
+//
+// Uncomment for apple vision method
+//- (NSDictionary *)dictionaryFromVNFaceObservation:(VNFaceObservation *)observation imageSize:(CGSize)imageSize {
+//
+//    CGRect faceRect = [self convertRectFromNormalizedCoordinates:observation.boundingBox imageSize:imageSize];
+//
+//    return @{
+//        @"trackingId": @-1,
+//        @"rect": @{
+//            @"x": @(faceRect.origin.x),
+//            @"y": @(faceRect.origin.y),
+//            @"width": @(faceRect.size.width),
+//            @"height": @(faceRect.size.height)
+//        },
+//        @"headEulerAngles": @{
+//            @"x": @0,
+//            @"y": @0,
+//            @"z": @0
+//        }
+//    };
+//}
 
 - (UIImageOrientation)imageOrientationFromDeviceOrientation {
   switch (self.currentOrientation) {
